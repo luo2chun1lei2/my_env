@@ -1,11 +1,43 @@
 #!/bin/bash
 
-# 作为工具的总入口。
-# * 所有环境变量都清除，保留单纯的环境。
-# * 如何需要启动某个环境，需要存在 ~/bin/setting/xxx/setting.sh 文件。
+# 作为工具的总入口
+
+set -eo pipefail
+[[ "${TRACE}" ]] && set -x
 
 export MYSH_DIR="$(cd "$(dirname "$0")" && pwd)"
 export MYSH_SRC_DIR="${MYSH_DIR}/src"
+
+if [ $# -eq 0 ]; then
+    echo "Please input one action and options."
+    exit 1
+fi
+
+source $MYSH_SRC_DIR/_common.sh
+source $MYSH_SRC_DIR/_help.sh
+source $MYSH_SRC_DIR/_list.sh
+source $MYSH_SRC_DIR/_set.sh
+source $MYSH_SRC_DIR/_run.sh
+
+case "$1" in
+    help)
+	usage $@
+	exit 0;;
+    list)
+	shift
+	grp_list $@
+	exit 0;;
+    set)
+	shift
+	grp_set $@
+	exit 0;;
+    run)
+	shift
+	grp_run $@
+	exit 0;;
+    *)
+	usage 1>&2 ; exit 1;;
+esac
 
 if [ $# -ne 1 ]; then
     echo "Please input one setting name."
