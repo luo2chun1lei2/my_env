@@ -1,48 +1,63 @@
 #!/bin/bash
 
 # 作为工具的总入口
+# 模式一： mysh <env name>
+#          $>command [options]
+# 模式二：mysh <env name> <command> [options]
 
+# 错误处理和调试
 set -eo pipefail
 [[ "${TRACE}" ]] && set -x
 
+# 当前路径和其他路径
 export MYSH_DIR="$(cd "$(dirname "$0")" && pwd)"
 export MYSH_SRC_DIR="${MYSH_DIR}/src"
+export MYSH_CONFIG_HOME="${HOME}/.my_shell"
+export MYSH_CONFIG_NAME="config.sh"
 
-if [ $# -eq 0 ]; then
-    echo "Please input one action and options."
-    exit 1
-fi
-
-source $MYSH_SRC_DIR/_common.sh
-source $MYSH_SRC_DIR/_help.sh
-source $MYSH_SRC_DIR/_list.sh
-source $MYSH_SRC_DIR/_set.sh
-source $MYSH_SRC_DIR/_run.sh
-
-case "$1" in
-    help)
-	usage $@
-	exit 0;;
-    list)
-	shift
-	grp_list $@
-	exit 0;;
-    set)
-	shift
-	grp_set $@
-	exit 0;;
-    run)
-	shift
-	grp_run $@
-	exit 0;;
-    *)
-	usage 1>&2 ; exit 1;;
-esac
-
+# 检查命令参数
 if [ $# -ne 1 ]; then
-    echo "Please input one setting name."
-    exit 1
+	echo "Please input one setting name."
+	exit 1
 fi
+
+export MYSH_ENV_NAME=$1
+export MYSH_COMMON_SETTING="${MYSH_CONFIG_HOME}/env/common/setting.sh"
+# 这个文件是必须有的，无论什么版本，如何进化。
+export MYSH_VERSION_SETTING="${MYSH_CONFIG_HOME}/env/${MYSH_ENV_NAME}/version.sh"
+export MYSH_CUR_SETTING="${MYSH_CONFIG_HOME}/env/${MYSH_ENV_NAME}/setting.sh"
+
+# 加载必要的工具
+source ${MYSH_SRC_DIR}/config/config.sh
+source ${MYSH_SRC_DIR}/init/init.sh
+source ${MYSH_SRC_DIR}/version/version.sh
+source ${MYSH_SRC_DIR}/cmd_option/cmd_option.sh
+
+# 如果没有就创建，如果有，就什么都不做
+# TODO 目前的版本是1
+mysh_config_create ${MYSH_CONFIG_HOME}
+mysh_config_create_env ${MYSH_CONFIG_HOME} $1 1
+
+#if [ ! -f $MYSH_CUR_SETTING ]; then
+#  echo "Cannot find \"${MYSH_VERSION_SETTING}\"."
+#  exit 1
+#fi
+
+# 读取版本信息
+source ${MYSH_VERSION_SETTING}
+export MYSH_CMD_VERSION=$VERSION
+
+echo "==>${MYSH_CMD_VERSION}"
+# 根据版本信息初始化
+bash --rcfile ${MYSH_SRC_DIR}/shell.sh
+
+exit 0
+
+#mysh_version_load_folder ${HOME}/.my_shell
+
+# 分析命令的参数
+
+mysh_cmd_option_parse $*
 
 export MYSH_COMMON_SETTING="${HOME}/bin/setting/common/setting.sh"
 export MYSH_CUR_SETTING="${HOME}/bin/setting/$1/setting.sh"

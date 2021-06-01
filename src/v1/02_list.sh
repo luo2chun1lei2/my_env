@@ -1,4 +1,4 @@
-# list project in grpower
+# list env name.
 function grp_list()
 {
     PROJECT_NAME_PATTERN=$1
