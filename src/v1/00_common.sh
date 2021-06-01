@@ -12,7 +12,6 @@ function grp_check_project_name
     fi
 }
 
-
 # $1: None
 # Ouput: 1:Not set, 0: set, value -> GRP_PROJECT_NAME
 function grp_get_current_project()

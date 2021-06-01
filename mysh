@@ -22,10 +22,8 @@ if [ $# -ne 1 ]; then
 fi
 
 export MYSH_ENV_NAME=$1
-export MYSH_COMMON_SETTING="${MYSH_CONFIG_HOME}/env/common/setting.sh"
 # 这个文件是必须有的，无论什么版本，如何进化。
 export MYSH_VERSION_SETTING="${MYSH_CONFIG_HOME}/env/${MYSH_ENV_NAME}/version.sh"
-export MYSH_CUR_SETTING="${MYSH_CONFIG_HOME}/env/${MYSH_ENV_NAME}/setting.sh"
 
 # 加载必要的工具
 source ${MYSH_SRC_DIR}/config/config.sh
@@ -47,9 +45,8 @@ mysh_config_create_env ${MYSH_CONFIG_HOME} $1 1
 source ${MYSH_VERSION_SETTING}
 export MYSH_CMD_VERSION=$VERSION
 
-echo "==>${MYSH_CMD_VERSION}"
-# 根据版本信息初始化
-bash --rcfile ${MYSH_SRC_DIR}/shell.sh
+# 加载此版本的内部脚本
+mysh_version_load_folder ${MYSH_SRC_DIR} ${MYSH_CMD_VERSION}
 
 exit 0
 

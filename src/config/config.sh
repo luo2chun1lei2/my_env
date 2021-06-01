@@ -28,11 +28,11 @@ function mysh_config_create_env()
 }
 
 # $1 config文件的路径
-function mysh_config_load()
-{
-	if [ -f $1 ]; then
-		source $1
-	else
-		echo "Cannot find \"$1\""
-	fi
-}
+#function mysh_config_load()
+#{
+#	if [ -f $1 ]; then
+#		source $1
+#	else
+#		echo "Cannot find \"$1\""
+#	fi
+#}
