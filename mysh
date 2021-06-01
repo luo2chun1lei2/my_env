@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# 作为工具的总入口。
+# * 所有环境变量都清除，保留单纯的环境。
+# * 如何需要启动某个环境，需要存在 ~/bin/setting/xxx/setting.sh 文件。
+
+export MYSH_DIR="$(cd "$(dirname "$0")" && pwd)"
+export MYSH_SRC_DIR="${MYSH_DIR}/src"
+
+if [ $# -ne 1 ]; then
+    echo "Please input one setting name."
+    exit 1
+fi
+
+export MYSH_COMMON_SETTING="${HOME}/bin/setting/common/setting.sh"
+export MYSH_CUR_SETTING="${HOME}/bin/setting/$1/setting.sh"
+
+if [ ! -f $MYSH_CUR_SETTING ]; then
+  echo "Cannot find \"setting.sh\" in ~/bin/setting/$1/."
+  exit 1
+fi
+
+bash --rcfile ${MYSH_SRC_DIR}/shell.sh
