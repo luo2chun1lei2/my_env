@@ -5,10 +5,10 @@ set -eo pipefail
 [[ "${TRACE}" ]] && set -x
 
 # 当前路径和其他路径
-export MYSH_DIR="$(cd "$(dirname "$0")" && pwd)"
-export MYSH_SRC_DIR="${MYSH_DIR}/src"
-export MYSH_CONFIG_HOME="${HOME}/.my_shell"
-export MYSH_CONFIG_NAME="config.sh"
+export MYENV_DIR="$(cd "$(dirname "$0")" && pwd)"
+export MYENV_SRC_DIR="${MYENV_DIR}/src"
+export MYENV_CONFIG_HOME="${HOME}/.my_shell"
+export MYENV_CONFIG_NAME="config.sh"
 
 # 检查命令参数
 if [ $# -ne 1 ]; then
@@ -16,32 +16,32 @@ if [ $# -ne 1 ]; then
 	exit 1
 fi
 
-export MYSH_ENV_NAME=$1
+export MYENV_ENV_NAME=$1
 # 这个文件是必须有的，无论什么版本，如何进化。
-export MYSH_VERSION_SETTING="${MYSH_CONFIG_HOME}/env/${MYSH_ENV_NAME}/version.sh"
+export MYENV_VERSION_SETTING="${MYENV_CONFIG_HOME}/env/${MYENV_ENV_NAME}/version.sh"
 
 # 加载必要的工具
-source ${MYSH_SRC_DIR}/config/config.sh
-source ${MYSH_SRC_DIR}/init/init.sh
-source ${MYSH_SRC_DIR}/version/version.sh
-source ${MYSH_SRC_DIR}/cmd_option/cmd_option.sh
+source ${MYENV_SRC_DIR}/config/config.sh
+source ${MYENV_SRC_DIR}/init/init.sh
+source ${MYENV_SRC_DIR}/version/version.sh
+source ${MYENV_SRC_DIR}/cmd_option/cmd_option.sh
 
 # 如果没有就创建，如果有，就什么都不做
 # TODO 目前的版本是1
-mysh_config_create ${MYSH_CONFIG_HOME}
-mysh_config_create_env ${MYSH_CONFIG_HOME} $1 1
+mysh_config_create ${MYENV_CONFIG_HOME}
+mysh_config_create_env ${MYENV_CONFIG_HOME} $1 1
 
-#if [ ! -f $MYSH_CUR_SETTING ]; then
-#  echo "Cannot find \"${MYSH_VERSION_SETTING}\"."
+#if [ ! -f $MYENV_CUR_SETTING ]; then
+#  echo "Cannot find \"${MYENV_VERSION_SETTING}\"."
 #  exit 1
 #fi
 
 # 读取版本信息
-source ${MYSH_VERSION_SETTING}
-export MYSH_CMD_VERSION=$VERSION
+source ${MYENV_VERSION_SETTING}
+export MYENV_CMD_VERSION=$VERSION
 
 # 加载此版本的内部脚本
-mysh_version_load_folder ${MYSH_SRC_DIR} ${MYSH_CMD_VERSION}
+mysh_version_load_folder ${MYENV_SRC_DIR} ${MYENV_CMD_VERSION}
 
 exit 0
 
@@ -51,12 +51,12 @@ exit 0
 
 mysh_cmd_option_parse $*
 
-export MYSH_COMMON_SETTING="${HOME}/bin/setting/common/setting.sh"
-export MYSH_CUR_SETTING="${HOME}/bin/setting/$1/setting.sh"
+export MYENV_COMMON_SETTING="${HOME}/bin/setting/common/setting.sh"
+export MYENV_CUR_SETTING="${HOME}/bin/setting/$1/setting.sh"
 
-if [ ! -f $MYSH_CUR_SETTING ]; then
+if [ ! -f $MYENV_CUR_SETTING ]; then
   echo "Cannot find \"setting.sh\" in ~/bin/setting/$1/."
   exit 1
 fi
 
-bash --rcfile ${MYSH_SRC_DIR}/shell.sh
+bash --rcfile ${MYENV_SRC_DIR}/shell.sh
