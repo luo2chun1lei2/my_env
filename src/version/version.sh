@@ -3,6 +3,13 @@
 
 export MYSH_VERSION_DIR=
 
+# 获取某个配置的版本号。
+# $1 
+function mysh_version_read_version
+{
+	echo ""
+}
+
 # $1 脚本的总目录
 # $2 需要加载的版本
 function mysh_version_load_folder()

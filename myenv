@@ -1,0 +1,125 @@
+#!/bin/bash
+
+# 作为工具的总入口
+# 设定当前的环境
+#  myenv <env name> | <path>
+#    如果没有 参数，那么找 nearest env。
+# 工作
+#  mysh <command> [options]
+#     如果没有 myenv，那么就选择 nearest env。
+
+# 错误处理和调试
+set -eo pipefail
+[[ "${TRACE}" ]] && set -x
+
+# 当前路径和其他路径
+export MYENV_DIR="$(cd "$(dirname "$0")" && pwd)"
+
+# 环境所在的目录
+export MYENV_PATH=
+# 环境的名字
+export MYENV_NAME=
+
+export MYENV_CONFIG_DIR="${HOME}/.myenv"
+export MYENV_CONFIG_PATH="${MYENV_CONFIG_DIR}/config.sh"
+export MYENV_CONFIG_MAP_NAME_PATH="${MYENV_CONFIG_DIR}/map_name_path"
+
+# 建立基本的配置文件。
+
+if [ ! -d "${MYENV_CONFIG_DIR}" ]; then
+	mkdir -p ${MYENV_CONFIG_DIR}
+fi
+
+if [ ! -f "${MYENV_CONFIG_PATH}" ]; then
+	touch ${MYENV_CONFIG_PATH}
+	touch ${MYENV_CONFIG_MAP_NAME_PATH}
+fi
+
+if [ ! -f "${MYENV_CONFIG_MAP_NAME_PATH}" ]; then
+	touch ${MYENV_CONFIG_MAP_NAME_PATH}
+fi
+
+source ${MYENV_CONFIG_PATH}
+
+function help()
+{
+	echo "Please input one env name/one path to env/ empty."
+}
+
+if [ $# -gt 1 ]; then
+	help
+	exit 1
+fi
+
+INPUT=
+if [ $# -eq 1 ]; then
+	INPUT=$1
+fi
+
+# $1 : name
+function myenv_find_env_path_by_name()
+{
+	local found_path
+	found_path=`grep "$1:" $MYENV_CONFIG_MAP_NAME_PATH | awk -F ":" '{print $2}'`
+	echo $found_path
+}
+
+# $1 : env path
+function myenv_check_env_path()
+{
+	if [ -d "${1}" -a -d "${1}/.myenv" ]; then
+		echo $1
+	else
+		echo
+	fi
+}
+
+# $1 : path
+function myenv_find_nearest_env_path()
+{
+	if [ ! -d "$1" ]; then
+		echo
+	fi
+	
+	DIR=$1
+	while [ 1 -eq 1 ]; do
+		if [ -d "$DIR" -a -d "$DIR/.myenv" ]; then
+			echo $DIR
+			return
+		fi
+		DIR=`dirname ${DIR}`
+		if [ "$DIR" == "/" ]; then
+			echo
+			return
+		fi
+	done
+}
+
+# Input 按照名字来分析
+if [ -n "$INPUT" ]; then
+	MYENV_NAME="${INPUT}"
+	MYENV_PATH=$(myenv_find_env_path_by_name ${MYENV_NAME})
+	MYENV_PATH=$(myenv_check_env_path ${MYENV_PATH})
+
+	if [ -z "${MYENV_PATH}" ]; then
+		# Input不是名字，当做路径
+		MYENV_NAME=
+		MYENV_PATH=$(myenv_check_env_path ${INPUT})
+
+		if [ -z "${MYENV_PATH}" ]; then
+			# 还是无法定位环境
+			echo "Input is not a name or valid path."
+			exit 1
+		fi
+	fi
+else
+	# 没有Input，就找最近的环境
+	MYENV_PATH=$(myenv_find_nearest_env_path $(pwd)) 
+	if [ -z "${MYENV_PATH}" ]; then
+		echo "Cannot find one valid env."
+		exit 2
+	fi
+fi
+
+echo "NAME=${MYENV_NAME}, PATH=${MYENV_PATH}"
+#bash --rcfile ${MYSH_SRC_DIR}/shell.sh

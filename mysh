@@ -1,10 +1,5 @@
 #!/bin/bash
 
-# 作为工具的总入口
-# 模式一： mysh <env name>
-#          $>command [options]
-# 模式二：mysh <env name> <command> [options]
-
 # 错误处理和调试
 set -eo pipefail
 [[ "${TRACE}" ]] && set -x
