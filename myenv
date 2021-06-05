@@ -9,7 +9,7 @@
 #     如果没有 myenv，那么就选择 nearest env。
 
 # 错误处理和调试
-set -eo pipefail
+#set -eo pipefail  # 如果想让函数命令返回其他的值，就不能设置这个。
 [[ "${TRACE}" ]] && set -x
 
 # 当前路径和其他路径
@@ -17,37 +17,14 @@ export MYENV_DIR="$(cd "$(dirname "$0")" && pwd)"
 export MYENV_SRC_DIR=${MYENV_DIR}/src
 
 # 加载必要的工具
+source ${MYENV_SRC_DIR}/common/common.sh
 source ${MYENV_SRC_DIR}/config/config.sh
 source ${MYENV_SRC_DIR}/init/init.sh
 source ${MYENV_SRC_DIR}/version/version.sh
 source ${MYENV_SRC_DIR}/cmd_option/cmd_option.sh
+source ${MYENV_SRC_DIR}/env/env.sh
 
-# 环境所在的目录
-export MYENV_PATH=
-# 环境的名字
-export MYENV_NAME=
-
-export MYENV_CONFIG_DIR="${HOME}/.myenv"
-export MYENV_CONFIG_PATH="${MYENV_CONFIG_DIR}/config.sh"
-export MYENV_CONFIG_MAP_NAME_PATH="${MYENV_CONFIG_DIR}/map_name_path"
-
-# 建立基本的配置文件。
-
-if [ ! -d "${MYENV_CONFIG_DIR}" ]; then
-	mkdir -p ${MYENV_CONFIG_DIR}
-fi
-
-if [ ! -f "${MYENV_CONFIG_PATH}" ]; then
-	touch ${MYENV_CONFIG_PATH}
-	touch ${MYENV_CONFIG_MAP_NAME_PATH}
-fi
-
-if [ ! -f "${MYENV_CONFIG_MAP_NAME_PATH}" ]; then
-	touch ${MYENV_CONFIG_MAP_NAME_PATH}
-fi
-
-source ${MYENV_CONFIG_PATH}
-
+# $0 是程序的名字.
 function myenv_help()
 {
 	printf "%s [options] [env name/path]\n" `basename $0`
@@ -59,6 +36,25 @@ function myenv_help()
 	printf "    -n/--name <name> : set name to path.\n"
 }
 
+# 环境所在的目录
+export MYENV_PATH=
+# 环境的名字
+export MYENV_NAME=
+
+# user的特殊配置。
+export MYENV_CONFIG_DIR="${HOME}/.myenv"
+export MYENV_CONFIG_PATH="${MYENV_CONFIG_DIR}/config.sh"
+export MYENV_CONFIG_MAP_NAME_PATH="${MYENV_CONFIG_DIR}/map_name_path"
+
+# 生成用户的环境配置文件
+# 每次都强制执行，这样配置文件都是全的。
+myenv_create_env_of_user
+
+# 加载工具本身的配置
+source ${MYENV_SRC_DIR}/env/pre_env.sh
+# 加载user环境中的配置
+source ${MYENV_CONFIG_PATH}
+
 # 分析参数
 OPTS=`getopt -o hcn: --long help,create,name: -n "$(basename $0)" -- "$@"`
 if [ $? != 0 ]; then
@@ -67,8 +63,11 @@ if [ $? != 0 ]; then
 fi
 eval set -- "$OPTS"
 
+# 环境的名字或者路径
 OPT_INPUT=
+# 是否创建环境
 OPT_CREATE=
+# 设置环境的名字
 OPT_SET_NAME=
 
 while true ; do
@@ -103,98 +102,8 @@ if [ $# -eq 1 ]; then
 	OPT_INPUT=$1
 fi
 
-# $1 : path
-function myenv_get_full_path()
-{
-	if [ -d "$1" ]; then
-		echo "$(cd "$1" && pwd)"
-	elif [ -f $1 ]; then
-		FN=`basename $1`
-		echo "$(cd "$(dirname "$1")" && pwd)/$FN"
-	fi
-	echo
-}
-
-# $1 : name
-function myenv_find_env_path_by_name()
-{
-	local found_path
-	found_path=`grep "$1:" $MYENV_CONFIG_MAP_NAME_PATH | awk -F ":" '{print $2}'`
-	echo $found_path
-}
-
-# $1 name
-# $2 path
-function myenv_set_name_of_env_path()
-{
-	local path
-	
-	path=$(myenv_get_full_path $2)
-	if [ -z "$path" ]; then
-		echo "Cannot get full path of $path"
-		return 1
-	fi
-	
-	sed -ri "/^$1:/d" $MYENV_CONFIG_MAP_NAME_PATH
-	# 不知道路径怎么放到 sed中。
-	#sed -i "#:$path#d" $MYENV_CONFIG_MAP_NAME_PATH
-	
-	echo "$1:$path" >> $MYENV_CONFIG_MAP_NAME_PATH
-	return 0
-}
-
-# $1 : env path
-function myenv_check_env_path()
-{
-	if [ -d "${1}" -a -d "${1}/.myenv" ]; then
-		echo $1
-	else
-		echo
-	fi
-}
-
-# $1 : env path
-function myenv_create_env_by_path()
-{
-	if [ ! -d "${1}" ]; then
-		printf "Cannot create a env in no existed directory(%s).\n" $1
-		return 1
-	fi
-
-	if [ -d "${1}/.myenv" ]; then
-		# do nothing
-		return 0
-	fi
-
-	TO_DIR="${1}/.myenv"
-	mkdir -p $TO_DIR
-	touch $TO_DIR/setting.sh
-	
-	return 1
-}
-
-# $1 : path
-function myenv_find_nearest_env_path()
-{
-	if [ ! -d "$1" ]; then
-		echo
-	fi
-	
-	DIR=$1
-	while [ 1 -eq 1 ]; do
-		if [ -d "$DIR" -a -d "$DIR/.myenv" ]; then
-			echo $DIR
-			return
-		fi
-		DIR=`dirname ${DIR}`
-		if [ "$DIR" == "/" ]; then
-			echo
-			return
-		fi
-	done
-}
-
 if [ "$OPT_CREATE" == 'y' ]; then
+	# 如果要创建环境
 	if [ -n "${OPT_INPUT}" ]; then
 		MYENV_NAME=
 		MYENV_PATH="${OPT_INPUT}"
@@ -207,8 +116,9 @@ if [ "$OPT_CREATE" == 'y' ]; then
 		exit 1
 	fi
 else
-	# Input 按照名字来分析
+	# 如果要加载环境
 	if [ -n "$OPT_INPUT" ]; then
+		# Input 按照名字来分析
 		MYENV_NAME="${OPT_INPUT}"
 		MYENV_PATH=$(myenv_find_env_path_by_name ${MYENV_NAME})
 		MYENV_PATH=$(myenv_check_env_path ${MYENV_PATH})
@@ -235,6 +145,7 @@ else
 	fi
 fi
 
+# 设定环境的名字
 if [ -n "${OPT_SET_NAME}" ]; then
 	MYENV_NAME=$OPT_SET_NAME
 	myenv_set_name_of_env_path $OPT_SET_NAME $MYENV_PATH
@@ -247,4 +158,5 @@ echo "MY ENV NAME=${MYENV_NAME}, PATH=${MYENV_PATH}"
 #bash --rcfile ${MYENV_SRC_DIR}/v1/others/shell.sh
 
 # 加载此版本的内部脚本
+# TODO 版本
 mysh_version_load_folder ${MYENV_SRC_DIR} 1

@@ -1,0 +1,1 @@
+export PATH=$PATH:${MYENV_CONFIG_DIR}/bin
