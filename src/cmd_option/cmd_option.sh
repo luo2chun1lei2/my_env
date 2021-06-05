@@ -12,8 +12,9 @@ function myenv_cmd_option_parse_and_do() {
 		exit 1
 	fi
 
-	for cmd in "${MYENV_SH_SUPPORT_CMD}"; do
-		if [ $cmd == "$1" ]; then
+	for cmd in ${MYENV_SH_SUPPORT_CMD}; do
+		#echo "==>$cmd"
+		if [ "$cmd" == "$1" ]; then
 			shift
 			#echo "${cmd}_parse_opts_and_do $@"
 			${cmd}_parse_opts_and_do $@

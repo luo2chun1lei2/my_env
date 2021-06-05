@@ -49,7 +49,7 @@ function help_parse_opts_and_do()
 	done
 	
 	if [ $# -eq 0 ]; then
-		for cmd in "${MYENV_SH_SUPPORT_CMD}"; do
+		for cmd in ${MYENV_SH_SUPPORT_CMD}; do
 			${cmd}_help
 		done
 	else
