@@ -1,4 +1,15 @@
-# 放一些共通的模块，杂七杂八的东西。
+# 放一些共通的模块，启动的环境。
+
+export MYENV_VERSION=1
+export MYENV_SH_VERSION=1
+
+export MYENV_CONFIG_HOME="${HOME}/.my_shell"
+export MYENV_CONFIG_NAME="config.sh"
+
+# user的特殊配置。
+export MYENV_CONFIG_DIR="${HOME}/.myenv"
+export MYENV_CONFIG_PATH="${MYENV_CONFIG_DIR}/config.sh"
+export MYENV_CONFIG_MAP_NAME_PATH="${MYENV_CONFIG_DIR}/map_name_path"
 
 # $1 : path
 function myenv_get_full_path()
@@ -39,3 +50,10 @@ function myenv_create_dir()
 		mkdir -p $1
 	fi
 }
+
+# 加载必要的工具
+source ${MYENV_SRC_DIR}/config/config.sh
+source ${MYENV_SRC_DIR}/init/init.sh
+source ${MYENV_SRC_DIR}/version/version.sh
+source ${MYENV_SRC_DIR}/cmd_option/cmd_option.sh
+source ${MYENV_SRC_DIR}/env/env.sh

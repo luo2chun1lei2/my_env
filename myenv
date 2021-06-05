@@ -14,15 +14,10 @@
 
 # 当前路径和其他路径
 export MYENV_DIR="$(cd "$(dirname "$0")" && pwd)"
-export MYENV_SRC_DIR=${MYENV_DIR}/src
-
-# 加载必要的工具
+export MYENV_SRC_DIR="${MYENV_DIR}/src"
 source ${MYENV_SRC_DIR}/common/common.sh
-source ${MYENV_SRC_DIR}/config/config.sh
-source ${MYENV_SRC_DIR}/init/init.sh
-source ${MYENV_SRC_DIR}/version/version.sh
-source ${MYENV_SRC_DIR}/cmd_option/cmd_option.sh
-source ${MYENV_SRC_DIR}/env/env.sh
+
+export MYENV_VERSION_DIR=${MYENV_SRC_DIR}/myenv/v${MYENV_VERSION}
 
 # $0 是程序的名字.
 function myenv_help()
@@ -40,11 +35,6 @@ function myenv_help()
 export MYENV_PATH=
 # 环境的名字
 export MYENV_NAME=
-
-# user的特殊配置。
-export MYENV_CONFIG_DIR="${HOME}/.myenv"
-export MYENV_CONFIG_PATH="${MYENV_CONFIG_DIR}/config.sh"
-export MYENV_CONFIG_MAP_NAME_PATH="${MYENV_CONFIG_DIR}/map_name_path"
 
 # 生成用户的环境配置文件
 # 每次都强制执行，这样配置文件都是全的。
@@ -155,8 +145,8 @@ if [ -n "${OPT_SET_NAME}" ]; then
 fi
 
 #echo "MY ENV NAME=${MYENV_NAME}, PATH=${MYENV_PATH}"
-#bash --rcfile ${MYENV_SRC_DIR}/v1/others/shell.sh
 
-# 加载此版本的内部脚本
+# 加载此版本的内部脚本( TODO 不应该在这里调用的！)
 # TODO 版本
-mysh_version_load_folder ${MYENV_SRC_DIR} 1
+#mysh_version_load_folder ${MYENV_SRC_DIR} 1
+bash --rcfile ${MYENV_VERSION_DIR}/shell.sh

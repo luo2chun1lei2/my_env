@@ -1,30 +1,23 @@
 #!/bin/bash
 
 # 错误处理和调试
-set -eo pipefail
+# set -eo pipefail # 自己判断错误。
 [[ "${TRACE}" ]] && set -x
+
+if [ -z "${MYENV_PATH}" ]; then
+	echo "Cannot find env MYENV_PATH, so is not in a env."
+	exit 1
+fi
 
 # 当前路径和其他路径
 export MYENV_DIR="$(cd "$(dirname "$0")" && pwd)"
 export MYENV_SRC_DIR="${MYENV_DIR}/src"
-export MYENV_CONFIG_HOME="${HOME}/.my_shell"
-export MYENV_CONFIG_NAME="config.sh"
+source ${MYENV_SRC_DIR}/common/common.sh
 
-# 检查命令参数
-if [ $# -ne 1 ]; then
-	echo "Please input one setting name."
-	exit 1
-fi
+export MYENV_SH_VERSION_DIR=${MYENV_SRC_DIR}/mysh
 
-export MYENV_ENV_NAME=$1
 # 这个文件是必须有的，无论什么版本，如何进化。
-export MYENV_VERSION_SETTING="${MYENV_CONFIG_HOME}/env/${MYENV_ENV_NAME}/version.sh"
-
-# 加载必要的工具
-source ${MYENV_SRC_DIR}/config/config.sh
-source ${MYENV_SRC_DIR}/init/init.sh
-source ${MYENV_SRC_DIR}/version/version.sh
-source ${MYENV_SRC_DIR}/cmd_option/cmd_option.sh
+#export MYENV_VERSION_SETTING="${MYENV_CONFIG_HOME}/env/${MYENV_ENV_NAME}/version.sh"
 
 # 如果没有就创建，如果有，就什么都不做
 # TODO 目前的版本是1
@@ -37,22 +30,14 @@ mysh_config_create_env ${MYENV_CONFIG_HOME} $1 1
 #fi
 
 # 读取版本信息
-source ${MYENV_VERSION_SETTING}
-export MYENV_CMD_VERSION=$VERSION
+#source ${MYENV_VERSION_SETTING}
+export MYENV_CMD_VERSION=1
 
 # 加载此版本的内部脚本
 mysh_version_load_folder ${MYENV_SRC_DIR} ${MYENV_CMD_VERSION}
 
-exit 0
-
-#mysh_version_load_folder ${HOME}/.my_shell
-
 # 分析命令的参数
-
 mysh_cmd_option_parse $*
-
-export MYENV_COMMON_SETTING="${HOME}/bin/setting/common/setting.sh"
-export MYENV_CUR_SETTING="${HOME}/bin/setting/$1/setting.sh"
 
 if [ ! -f $MYENV_CUR_SETTING ]; then
   echo "Cannot find \"setting.sh\" in ~/bin/setting/$1/."
