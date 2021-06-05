@@ -21,7 +21,7 @@ function myenv_create_env_by_path()
 	myenv_create_dir $TO_DIR/bin		# 自定义的脚本
 	myenv_create_file $TO_DIR/setting.sh	# 自定义的设置
 	
-	return 1
+	return 0
 }
 
 # $1 : name

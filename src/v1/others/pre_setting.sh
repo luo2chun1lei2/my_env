@@ -51,3 +51,5 @@ function mysh_prompt()
 MYENV_CMD_RLT='`if [ $? -eq 0 ]; then echo -n "\[\e[1;37;42m\]O\[\e[0m\]"; else echo -n "\[\e[1;37;41m\]X\[\e[0m\]"; fi;`'
 MYENV_PROMPT='$(mysh_prompt)'
 PS1="\342\224\214 $MYENV_CMD_RLT \[\e[1;37;42m\][#\#@\! \t JOB:\j \u@\h:\w]\[\e[0m\]\n\342\224\224   \[\e[1;37;43m\]$MYENV_PROMPT\[\e[0m\]\n\$ "
+
+export PATH=${PATH}:${MYENV_PATH}/.myenv/bin
