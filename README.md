@@ -33,10 +33,10 @@ directory/file ---+
 
 从此目录向上，找到的存在 .myenv 的配置。
 
-.myenv  -+-- setting.sh   自己的配置
-         +-- bin/         自定义的脚本
+.myenv  -+-- setting.sh   自己的配置（环境可以看到）
+         +-- bin/         自定义的脚本（环境可以看到）
          +-- map_name_path  name和path之间的映射【用户配置】
-         +-- config.sh    特定配置【用户配置】
+         +-- config.sh    配置myenv 本身的【用户配置】(环境不一定看到）
 
 1. 每个目标都可以有自己的设置。
 2. 目标可以根据文件树形成包含关系。

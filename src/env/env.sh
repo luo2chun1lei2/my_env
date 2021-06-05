@@ -4,14 +4,12 @@
 function myenv_create_env_of_user() {
 
 	# 建立基本的配置文件。
-	if [ ! -d "${MYENV_CONFIG_DIR}" ]; then
-		mkdir -p ${MYENV_CONFIG_DIR}
-	fi
-	
+	myenv_create_dir ${MYENV_CONFIG_DIR}
+
 	myenv_create_env_by_path ${HOME}
 
-	touch ${MYENV_CONFIG_PATH}
-	touch ${MYENV_CONFIG_MAP_NAME_PATH}
+	myenv_create_file ${MYENV_CONFIG_PATH}
+	myenv_create_file ${MYENV_CONFIG_MAP_NAME_PATH}
 }
 
 # 根据路径创建环境
@@ -19,9 +17,9 @@ function myenv_create_env_of_user() {
 function myenv_create_env_by_path()
 {
 	TO_DIR="${1}/.myenv"
-	mkdir -p $TO_DIR
-	mkdir -p $TO_DIR/bin		# 自定义的脚本
-	touch $TO_DIR/setting.sh	# 自定义的设置
+	myenv_create_dir $TO_DIR
+	myenv_create_dir $TO_DIR/bin		# 自定义的脚本
+	myenv_create_file $TO_DIR/setting.sh	# 自定义的设置
 	
 	return 1
 }

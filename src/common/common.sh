@@ -11,3 +11,21 @@ function myenv_get_full_path()
 	fi
 	echo
 }
+
+# 经过判断才创建文件，避免修改文件的时间.
+# $1 path
+function myenv_create_file()
+{
+	if [ ! -f $1 ]; then
+		touch $1
+	fi
+}
+
+# 经过判断才创建文件夹
+# $1 path
+function myenv_create_dir()
+{
+	if [ ! -d $1 ]; then
+		mkdir -p $1
+	fi
+}

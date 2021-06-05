@@ -154,7 +154,7 @@ if [ -n "${OPT_SET_NAME}" ]; then
 	fi
 fi
 
-echo "MY ENV NAME=${MYENV_NAME}, PATH=${MYENV_PATH}"
+#echo "MY ENV NAME=${MYENV_NAME}, PATH=${MYENV_PATH}"
 #bash --rcfile ${MYENV_SRC_DIR}/v1/others/shell.sh
 
 # 加载此版本的内部脚本
