@@ -5,7 +5,13 @@ source $HOME/.bashrc
 
 function mysh_prompt()
 {
-    info=""
+    info=" "
+    
+    if [ -n "${MYENV_NAME}" ]; then
+		info="${info}ENV:${MYENV_NAME} "
+	else
+		info="${info}ENV:$(myenv_get_abbr_path ${MYENV_PATH}) "
+	fi
 
     # find ss-local
     ss_pid=`pidof ss-local 2>/dev/null`
@@ -44,4 +50,4 @@ function mysh_prompt()
 # 这里必须用单引号，否则"$?"就无法推迟到显示时才执行。
 MYENV_CMD_RLT='`if [ $? -eq 0 ]; then echo -n "\[\e[1;37;42m\]O\[\e[0m\]"; else echo -n "\[\e[1;37;41m\]X\[\e[0m\]"; fi;`'
 MYENV_PROMPT='$(mysh_prompt)'
-PS1="\342\224\214 $MYENV_CMD_RLT \[\e[1;37;42m\][#\#@\! \t JOB:\j \w]\[\e[0m\]\n\342\224\224   \[\e[1;37;43m\]$MYENV_PROMPT\[\e[0m\]\n\$ "
+PS1="\342\224\214 $MYENV_CMD_RLT \[\e[1;37;42m\][#\#@\! \t JOB:\j \u@\h:\w]\[\e[0m\]\n\342\224\224   \[\e[1;37;43m\]$MYENV_PROMPT\[\e[0m\]\n\$ "

@@ -12,6 +12,16 @@ function myenv_get_full_path()
 	echo
 }
 
+# 根据path，生成缩略路径
+# $1 : path
+function myenv_get_abbr_path()
+{
+	base1=$(basename $1)
+	base2=$(basename $(dirname $1))
+	echo "$base2/$base1"
+}
+export -f myenv_get_abbr_path
+
 # 经过判断才创建文件，避免修改文件的时间.
 # $1 path
 function myenv_create_file()
