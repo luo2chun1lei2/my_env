@@ -53,7 +53,6 @@ function myenv_create_dir()
 
 # 加载必要的工具
 source ${MYENV_SRC_DIR}/config/config.sh
-source ${MYENV_SRC_DIR}/init/init.sh
-source ${MYENV_SRC_DIR}/version/version.sh
-source ${MYENV_SRC_DIR}/cmd_option/cmd_option.sh
+source ${MYENV_SRC_DIR}/common/version/version.sh
+source ${MYENV_SRC_DIR}/common/cmd_option/cmd_option.sh
 source ${MYENV_SRC_DIR}/env/env.sh
