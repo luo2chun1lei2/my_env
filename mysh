@@ -12,6 +12,9 @@ fi
 # 当前路径和其他路径
 export MYENV_DIR="$(cd "$(dirname "$0")" && pwd)"
 export MYENV_SRC_DIR="${MYENV_DIR}/src"
+export MYENV_VERSION=1
+export MYENV_SH_VERSION=1
+
 source ${MYENV_SRC_DIR}/common/start.sh
 
 export MYENV_SH_VERSION_DIR=${MYENV_SRC_DIR}/mysh

@@ -1,15 +1,16 @@
 # 放一些共通的模块，启动的环境。
 
-export MYENV_VERSION=1
-export MYENV_SH_VERSION=1
-
 export MYENV_CONFIG_HOME="${HOME}/.my_shell"
 export MYENV_CONFIG_NAME="config.sh"
 
 # user的特殊配置。
 export MYENV_CONFIG_DIR="${HOME}/.myenv"
 export MYENV_CONFIG_PATH="${MYENV_CONFIG_DIR}/config.sh"
-export MYENV_CONFIG_MAP_NAME_PATH="${MYENV_CONFIG_DIR}/map_name_path"
+export MYENV_BIN_PATH="${MYENV_CONFIG_DIR}/bin"
+export MYENV_SOURCE_PATH="${MYENV_CONFIG_DIR}/source"
+export MYENV_DATA_PATH="${MYENV_CONFIG_DIR}/data"
+
+export MYENV_CONFIG_MAP_NAME_PATH="${MYENV_DATA_PATH}/map_name_path"
 
 # $1 : path
 function myenv_get_full_path()

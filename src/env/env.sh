@@ -18,8 +18,10 @@ function myenv_create_env_by_path()
 {
 	TO_DIR="${1}/.myenv"
 	myenv_create_dir $TO_DIR
-	myenv_create_dir $TO_DIR/bin		# 自定义的脚本
-	myenv_create_file $TO_DIR/setting.sh	# 自定义的设置
+	myenv_create_file $TO_DIR/kind		# 配置的类型
+	myenv_create_dir $TO_DIR/bin		# 自定义的独立程序
+	myenv_create_dir $TO_DIR/source		# 自定义的脚本
+	myenv_create_dir $TO_DIR/data		# 自定义的数据
 	
 	return 0
 }
