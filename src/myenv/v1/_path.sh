@@ -115,8 +115,8 @@ function cdd_help()
 {
     PRG_NAME=$(basename "$0")
     
-    printf '\n%s cd <no>\n' ${PRG_NAME}
-    printf '  cd directory by NO\n'
+    printf '\n%s cd [no]\n' ${PRG_NAME}
+    printf '  cd directory by NO, if not set cd env home.\n'
 }
 
 # $* 参数分析！
@@ -147,6 +147,6 @@ function cdd()
 		local path=${MYENV_TMP_PATH[$1]}
 		cd $path
 	else
-		cdd_help
+		cd ${MYENV_PATH}
 	fi
 }
