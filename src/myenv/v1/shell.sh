@@ -3,11 +3,11 @@
 source ${MYENV_VERSION_DIR}/_path.sh
 source ${MYENV_VERSION_DIR}/pre_setting.sh
 
-#source ${MYENV_PATH}/.myenv/source/setting.sh
-# TODO 这里应该执行 source/下面的所有的脚本！
-for f in `ls ${MYENV_PATH}/.myenv/source/ | sort`; do
+# 这里执行 source/下面的所有的脚本！
+for f in `find ${MYENV_PATH}/.myenv/source/ -type f | sort`; do
 	source $f
 done
+export PATH=${PATH}:${MYENV_PATH}/.myenv/bin
 
 source ${MYENV_VERSION_DIR}/post_setting.sh
 cd ${MYENV_PATH}
