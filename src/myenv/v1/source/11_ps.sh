@@ -1,16 +1,13 @@
-# use the original bashrc file
-source $HOME/.bashrc
-
 # below are the customized settings.
 
 function mysh_prompt()
 {
     info=" "
     
-    if [ -n "${MYENV_NAME}" ]; then
-		info="${info}ENV:${MYENV_NAME} "
+    if [ -n "${MYENV_CUR_NAME}" ]; then
+		info="${info}ENV:${MYENV_CUR_NAME} "
 	else
-		info="${info}ENV:$(myenv_get_abbr_path ${MYENV_PATH}) "
+		info="${info}ENV:$(myenv_get_abbr_path ${MYENV_CUR_PATH}) "
 	fi
 
     # find ss-local

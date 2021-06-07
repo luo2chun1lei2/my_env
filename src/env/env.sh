@@ -4,12 +4,12 @@
 function myenv_create_env_of_user() {
 
 	# 建立基本的配置文件。
-	myenv_create_dir ${MYENV_CONFIG_DIR}
+	myenv_create_dir ${MYENV_HOME_CONFIG_PATH}
 
 	myenv_create_env_by_path ${HOME}
 
 	myenv_create_file ${MYENV_CONFIG_PATH}
-	myenv_create_file ${MYENV_CONFIG_MAP_NAME_PATH}
+	myenv_create_file ${MYENV_HOME_CONFIG_MAP_NAME_PATH}
 }
 
 # 根据路径创建环境
@@ -30,7 +30,7 @@ function myenv_create_env_by_path()
 function myenv_find_env_path_by_name()
 {
 	local found_path
-	found_path=`grep "$1:" $MYENV_CONFIG_MAP_NAME_PATH | awk -F ":" '{print $2}'`
+	found_path=`grep "$1:" $MYENV_HOME_CONFIG_MAP_NAME_PATH | awk -F ":" '{print $2}'`
 	echo $found_path
 }
 
@@ -46,11 +46,11 @@ function myenv_set_name_of_env_path()
 		return 1
 	fi
 	
-	sed -ri "/^$1:/d" $MYENV_CONFIG_MAP_NAME_PATH
+	sed -ri "/^$1:/d" $MYENV_HOME_CONFIG_MAP_NAME_PATH
 	# 不知道路径怎么放到 sed中。
-	#sed -i "#:$path#d" $MYENV_CONFIG_MAP_NAME_PATH
+	#sed -i "#:$path#d" $MYENV_HOME_CONFIG_MAP_NAME_PATH
 	
-	echo "$1:$path" >> $MYENV_CONFIG_MAP_NAME_PATH
+	echo "$1:$path" >> $MYENV_HOME_CONFIG_MAP_NAME_PATH
 	return 0
 }
 

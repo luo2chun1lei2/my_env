@@ -1,3 +1,5 @@
+# 实现临时的路径记录和跳转
+
 # 路径数组
 MYENV_TMP_PATH=()
 
@@ -147,6 +149,6 @@ function cdd()
 		local path=${MYENV_TMP_PATH[$1]}
 		cd $path
 	else
-		cd ${MYENV_PATH}
+		cd ${MYENV_CUR_PATH}
 	fi
 }

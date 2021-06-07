@@ -4,40 +4,40 @@
 # set -eo pipefail # 自己判断错误。
 [[ "${TRACE}" ]] && set -x
 
-if [ -z "${MYENV_PATH}" ]; then
-	echo "Cannot find env MYENV_PATH, so is not in a env."
+if [ -z "${MYENV_CUR_PATH}" ]; then
+	echo "Cannot find env MYENV_CUR_PATH, so is not in a env."
 	exit 1
 fi
 
 # 当前路径和其他路径
-export MYENV_DIR="$(cd "$(dirname "$0")" && pwd)"
-export MYENV_SRC_DIR="${MYENV_DIR}/src"
-export MYENV_VERSION=1
-export MYENV_SH_VERSION=1
+export MYENV_TOOL_PATH="$(cd "$(dirname "$0")" && pwd)"
+export MYENV_TOOL_SRC_PATH="${MYENV_TOOL_PATH}/src"
+export MYENV_TOOL_VERSION=1
+export MYENV_TOOL_SH_VERSION=1
 
-source ${MYENV_SRC_DIR}/common/start.sh
+source ${MYENV_TOOL_SRC_PATH}/common/start.sh
 
-export MYENV_SH_VERSION_DIR=${MYENV_SRC_DIR}/mysh
+export MYENV_TOOL_SH_VERSION_DIR=${MYENV_TOOL_SRC_PATH}/mysh
 
 # 这个文件是必须有的，无论什么版本，如何进化。
-#export MYENV_VERSION_SETTING="${MYENV_CONFIG_HOME}/env/${MYENV_ENV_NAME}/version.sh"
+#export MYENV_TOOL_VERSION_SETTING="${MYENV_HOME_CONFIG_PATH}/env/${MYENV_ENV_NAME}/version.sh"
 
 # 如果没有就创建，如果有，就什么都不做
 # TODO 目前的版本是1
-#mysh_config_create ${MYENV_CONFIG_HOME}
-#mysh_config_create_env ${MYENV_CONFIG_HOME} $1 1
+#mysh_config_create ${MYENV_HOME_CONFIG_PATH}
+#mysh_config_create_env ${MYENV_HOME_CONFIG_PATH} $1 1
 
 #if [ ! -f $MYENV_CUR_SETTING ]; then
-#  echo "Cannot find \"${MYENV_VERSION_SETTING}\"."
+#  echo "Cannot find \"${MYENV_TOOL_VERSION_SETTING}\"."
 #  exit 1
 #fi
 
 # 读取版本信息
-#source ${MYENV_VERSION_SETTING}
+#source ${MYENV_TOOL_VERSION_SETTING}
 #export MYENV_CMD_VERSION=1
 
 # 加载此版本的内部脚本
-myenv_version_load_folder ${MYENV_SRC_DIR}/mysh ${MYENV_SH_VERSION}
+myenv_version_load_folder ${MYENV_TOOL_SRC_PATH}/mysh ${MYENV_TOOL_SH_VERSION}
 
 # 分析命令的参数
 myenv_cmd_option_parse_and_do $*

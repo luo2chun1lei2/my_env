@@ -2,24 +2,19 @@
 
 # 作为工具的总入口
 # 设定当前的环境
-#  myenv <env name> | <path>
+#  myenv <command> [options]
 #    如果没有 参数，那么找 nearest env。
 # 工作
 #  mysh <command> [options]
 #     如果没有 myenv，那么就选择 nearest env。
 
-# 错误处理和调试
-#set -eo pipefail  # 如果想让函数命令返回其他的值，就不能设置这个。
-[[ "${TRACE}" ]] && set -x
+export MYENV_TOOL_PATH="$(cd "$(dirname "$0")" && pwd)"
+export MYENV_TOOL_SRC_PATH="${MYENV_TOOL_PATH}/src"
 
-# 当前路径和其他路径
-export MYENV_DIR="$(cd "$(dirname "$0")" && pwd)"
-export MYENV_SRC_DIR="${MYENV_DIR}/src"
-export MYENV_VERSION=1
-export MYENV_SH_VERSION=1
+source ${MYENV_TOOL_SRC_PATH}/common/pre_parse.sh
 
-source ${MYENV_SRC_DIR}/common/start.sh
+source ${MYENV_TOOL_VERSION_DIR}/parse.sh
 
-export MYENV_VERSION_DIR=${MYENV_SRC_DIR}/myenv/v${MYENV_VERSION}
+source ${MYENV_TOOL_SRC_PATH}/common/post_parse.sh
 
-source ${MYENV_VERSION_DIR}/parse.sh
+source ${MYENV_TOOL_VERSION_DIR}/run.sh

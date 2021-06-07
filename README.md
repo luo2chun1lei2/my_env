@@ -40,10 +40,10 @@ my_shell缩写为“mysh”，用于辅助管理使用环境。
 
 3. 配置
 通用配置
-.myenv  -+-- kind         自己配置的类型        MYENV_KIND=[0-9]+
-         +-- bin/         自定义的程序          MYENV_BIN_PATH=
-         +-- source/      自定义的脚本在里面    MYENV_SOURCE_PATH=
-         +-- data/        自定义的数据在里面    MYENV_DATA_PATH=
+.myenv  -+-- kind         自己配置的类型        
+         +-- bin/         自定义的程序          
+         +-- source/      自定义的脚本在里面    
+         +-- data/        自定义的数据在里面    
 
 ### 工具
 1. myenv 主要是创建、跳转环境。

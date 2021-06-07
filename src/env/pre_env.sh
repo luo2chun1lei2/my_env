@@ -1,1 +1,1 @@
-export PATH=$PATH:${MYENV_CONFIG_DIR}/bin
+#export PATH=$PATH:${MYENV_HOME_CONFIG_PATH}/bin
