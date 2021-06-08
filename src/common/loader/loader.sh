@@ -1,13 +1,18 @@
 
 # $1: path
+# $*: parameter
 function myenv_load_scripts()
 {
 	if [ ! -d $1 ]; then
 		return 1
 	fi
+	local dir=$1
+	shift
 	
-	for f in `find $1 -type f | sort`; do
-		source $f
+	local opts="$*"
+	
+	for f in `find $dir -type f | sort`; do
+		source $f $opts
 	done
 
 	return 0

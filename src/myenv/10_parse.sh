@@ -23,5 +23,5 @@ myenv_create_env_of_user
 # TODO 后面这个地址要修改！
 myenv_load_scripts ${MYENV_TOOL_VERSION_DIR}/command
 
-#echo "myenv_cmd_option_parse_and_do myenv ${MYENV_SUPPORT_CMD} $*"
+#echo "myenv_cmd_option_parse_and_do \"myenv\" \"${MYENV_SUPPORT_CMD}\" $*"
 myenv_cmd_option_parse_and_do "myenv" "${MYENV_SUPPORT_CMD}" $*

@@ -30,4 +30,4 @@ source ${MYENV_TOOL_SRC_COMMON_PATH}/loader/loader.sh
 source ${MYENV_TOOL_SRC_PATH}/config/config.sh
 source ${MYENV_TOOL_SRC_PATH}/env/env.sh
 
-myenv_load_scripts ${MYENV_TOOL_MYENV_DIR}
+myenv_load_scripts ${MYENV_TOOL_MYENV_DIR} "$*"
