@@ -35,17 +35,34 @@ function myenv_help()
 	done
 	
 	if [ $# -eq 0 ]; then
+		# 显示所有的命令的帮助信息
 		for cmd in ${MYENV_SUPPORT_CMD}; do
-			myenv_${cmd}_help
+			if [[ $cmd =~ .*:.* ]]; then
+				cmd_path=${cmd#*:}
+				${cmd_path} -h
+			else
+				myenv_${cmd}_help
+			fi
 		done
 	else
-		for arg in $*; do
-			echo "${MYENV_SUPPORT_CMD}" | grep -w $arg >/dev/null 2>&1
+		# 显示某个命令的帮助信息
+		for cmd in $*; do
+			echo "${MYENV_SUPPORT_CMD}" | grep -w "$cmd:" >/dev/null 2>&1
 			if [ $? -eq 0 ]; then
-				#echo "${arg}_help"
-				myenv_${arg}_help
+				cmd_path=$(myenv_get_path_by_cmd $cmd ${MYENV_SUPPORT_CMD})
+				if [ -f $cmd_path ]; then
+					${cmd_path} -h
+				else
+					myenv_${cmd}_help
+				fi
+				#if [[ $cmd =~ .*:.* ]]; then
+				#	cmd_path=${cmd#*:}
+				#	${cmd_path} -h
+				#else
+				#	myenv_${cmd}_help
+				#fi
 			else
-				echo "Cannot find command $arg."
+				echo "Cannot find command $cmd."
 			fi
 		done
 	fi

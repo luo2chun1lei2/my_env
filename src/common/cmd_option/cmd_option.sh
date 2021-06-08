@@ -20,12 +20,26 @@ function myenv_cmd_option_parse_and_do() {
 	local supported_cmd=$1
 	shift
 	
-	for cmd in ${supported_cmd}; do
+	for one in ${supported_cmd}; do
 		#echo "==>$cmd"
+		local cmd
+		local cmd_path
+		if [[ $one =~ .*:.* ]]; then
+			cmd=${one%:*}
+			cmd_path=${one#*:}
+		else
+			cmd=$one
+			cmd_path=
+		fi
+		
 		if [ "$cmd" == "$1" ]; then
 			shift
 			#echo "${prefix}_${cmd} $@"
-			${prefix}_${cmd} $@
+			if [ -n "$cmd_path" ]; then
+				${cmd_path} $@
+			else
+				${prefix}_${cmd} $@
+			fi
 			return
 		fi
 	done

@@ -1,5 +1,4 @@
 
-
 # 需要 MYENV_CUR_NAME 和 MYENV_CUR_NAME 都准备好。
 function myenv_enter_env()
 {
