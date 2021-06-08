@@ -14,7 +14,7 @@ function myenv_enter_help()
 }
 
 # $* 参数分析！
-function myenv_enter_parse_opts_and_do()
+function myenv_enter()
 {
 	# 分析参数
 	OPTS=`getopt -o h --long help -n "$(basename $0)" -- "$@"`

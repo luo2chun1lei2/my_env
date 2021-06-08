@@ -14,7 +14,7 @@ function mysh_setd_help()
 }
 
 # $* 参数分析！
-function mysh_setd_parse_opts_and_do()
+function mysh_setd()
 {
 	# 分析参数
 	OPTS=`getopt -o h --long help -n "$(basename $0)" -- "$@"`
@@ -50,7 +50,7 @@ function mysh_unsetd_help()
 }
 
 # $* 参数分析！
-function mysh_unsetd_parse_opts_and_do()
+function mysh_unsetd()
 {
 	# 分析参数
 	OPTS=`getopt -o h --long help -n "$(basename $0)" -- "$@"`
@@ -89,7 +89,7 @@ function mysh_listd_help()
 }
 
 # $* 参数分析！
-function mysh_listd_parse_opts_and_do()
+function mysh_listd()
 {
 	# 分析参数
 	OPTS=`getopt -o h --long help -n "$(basename $0)" -- "$@"`
@@ -124,7 +124,7 @@ function mysh_cdd_help()
 }
 
 # $* 参数分析！
-function mysh_cdd_parse_opts_and_do()
+function mysh_cdd()
 {
 	# 分析参数
 	OPTS=`getopt -o h --long help -n "$(basename $0)" -- "$@"`

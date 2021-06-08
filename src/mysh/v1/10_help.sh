@@ -25,7 +25,7 @@ function mysh_help_help()
 }
 
 # $* 参数分析！
-function mysh_help_parse_opts_and_do()
+function mysh_help()
 {
 	local prefix="mysh"
 	
