@@ -20,7 +20,7 @@ function myenv_load_scripts()
 
 # Just set path to bin
 # $1: path
-function myenv_load_bin()
+function myenv_load_bin_to_path()
 {
 	if [ ! -d $1 ]; then
 		return 1
