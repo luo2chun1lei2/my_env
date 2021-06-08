@@ -2,7 +2,7 @@
 
 MYENV_SH_SUPPORT_CMD="${MYENV_SH_SUPPORT_CMD} help"
 
-function help_help()
+function mysh_help_help()
 {
     PRG_NAME=$(basename "$0")
 
@@ -25,12 +25,14 @@ function help_help()
 }
 
 # $* 参数分析！
-function help_parse_opts_and_do()
+function mysh_help_parse_opts_and_do()
 {
+	local prefix="mysh"
+	
 	# 分析参数
 	OPTS=`getopt -o h --long help -n "$(basename $0)" -- "$@"`
 	if [ $? != 0 ]; then
-		help_help
+		${prefix}_help_help
 		return 1
 	fi
 	eval set -- "$OPTS"
@@ -38,26 +40,26 @@ function help_parse_opts_and_do()
 	while true ; do
 		case "$1" in
 			-h|--help)
-				help_help
+				${prefix}_help_help
 				shift ; return 0 ;;
 			--)
 				shift ; break ;;
 			*)
-				help_help
+				${prefix}_help_help
 				shift ; return 1 ;;
 		esac
 	done
 	
 	if [ $# -eq 0 ]; then
 		for cmd in ${MYENV_SH_SUPPORT_CMD}; do
-			${cmd}_help
+			${prefix}_${cmd}_help
 		done
 	else
 		for arg in $*; do
 			echo "${MYENV_SH_SUPPORT_CMD}" | grep -w $arg >/dev/null 2>&1
 			if [ $? -eq 0 ]; then
 				#echo "${arg}_help"
-				${arg}_help
+				${prefix}_${arg}_help
 			else
 				echo "Cannot find command $arg."
 			fi

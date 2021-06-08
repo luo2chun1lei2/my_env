@@ -8,6 +8,7 @@
 #   ${prefix}_xxx_parse_opts_and_do() $* 剩下的参数
 # 必须存在一个命令是 help_help
 function myenv_cmd_option_parse_and_do() {
+#set -x
 	if [ $# -lt 3 ]; then
 		echo "Please input prefix, supported commands and one action at least."
 		exit 1
@@ -31,5 +32,7 @@ function myenv_cmd_option_parse_and_do() {
 	done
 	
 	# 如果没有找到，就执行帮助!
+	echo "Cannot find command($1)."
 	${prefix}_help_help
+#set +x
 }
