@@ -40,4 +40,4 @@ export MYENV_TOOL_SH_VERSION_DIR=${MYENV_TOOL_SRC_PATH}/mysh
 myenv_version_load_folder ${MYENV_TOOL_SRC_PATH}/mysh ${MYENV_TOOL_SH_VERSION}
 
 # 分析命令的参数
-myenv_cmd_option_parse_and_do $*
+myenv_cmd_option_parse_and_do "" "${MYENV_SH_SUPPORT_CMD}" $*

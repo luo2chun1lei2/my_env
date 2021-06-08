@@ -1,8 +1,10 @@
+# 暂时放在这里，根本不对！
+
 # 记录路径和跳转
 # setd path to name
 # used name
 
-MYENV_SH_SUPPORT_CMD="${MYENV_SH_SUPPORT_CMD} setd unsetd cd"
+MYENV_SUPPORT_CMD="${MYENV_SUPPORT_CMD} setd unsetd cdd"
 
 # 路径数组
 MYENV_TMP_PATH=()
