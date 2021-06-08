@@ -13,6 +13,7 @@ function myenv_load_scripts()
 	return 0
 }
 
+# Just set path to bin
 # $1: path
 function myenv_load_bin()
 {

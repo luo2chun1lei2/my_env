@@ -11,6 +11,3 @@ function myenv_enter_env()
 if [ "${MYENV_ENTER_ENV}" == 'y' ]; then
 	myenv_enter_env
 fi
-
-
-

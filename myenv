@@ -8,13 +8,26 @@
 #  mysh <command> [options]
 #     如果没有 myenv，那么就选择 nearest env。
 
+# 调试设定
+[[ "${TRACE}" ]] && set -x
+#set -eo pipefail  # 如果想让函数命令返回其他的值，就不能设置这个。
+
 export MYENV_TOOL_PATH="$(cd "$(dirname "$0")" && pwd)"
 export MYENV_TOOL_SRC_PATH="${MYENV_TOOL_PATH}/src"
+export MYENV_TOOL_MYENV_DIR="${MYENV_TOOL_SRC_PATH}/myenv"
 
-source ${MYENV_TOOL_SRC_PATH}/common/pre_parse.sh
+# 工具本身的环境变量。
+export MYENV_TOOL_SRC_COMMON_PATH="${MYENV_TOOL_SRC_PATH}/common"
+export MYENV_TOOL_VERSION=1
+export MYENV_TOOL_SH_VERSION=1
 
-source ${MYENV_TOOL_VERSION_DIR}/parse.sh
+# 加载共通的脚本
+source ${MYENV_TOOL_SRC_COMMON_PATH}/utils/utils.sh
+source ${MYENV_TOOL_SRC_COMMON_PATH}/version/version.sh
+source ${MYENV_TOOL_SRC_COMMON_PATH}/cmd_option/cmd_option.sh
+source ${MYENV_TOOL_SRC_COMMON_PATH}/loader/loader.sh
 
-source ${MYENV_TOOL_SRC_PATH}/common/post_parse.sh
+source ${MYENV_TOOL_SRC_PATH}/config/config.sh
+source ${MYENV_TOOL_SRC_PATH}/env/env.sh
 
-source ${MYENV_TOOL_VERSION_DIR}/run.sh
+myenv_load_scripts ${MYENV_TOOL_MYENV_DIR}

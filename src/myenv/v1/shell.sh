@@ -31,7 +31,7 @@ fi
 ########################################
 
 # 加载 myshe此版本的内部脚本
-echo "myenv_version_load_folder ${MYENV_TOOL_SRC_PATH}/mysh ${MYENV_TOOL_SH_VERSION}"
+#echo "myenv_version_load_folder ${MYENV_TOOL_SRC_PATH}/mysh ${MYENV_TOOL_SH_VERSION}"
 myenv_version_load_folder ${MYENV_TOOL_SRC_PATH}/mysh ${MYENV_TOOL_SH_VERSION}
 
 ########################################

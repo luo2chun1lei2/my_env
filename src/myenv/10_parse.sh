@@ -20,12 +20,8 @@ export MYENV_CUR_NAME=
 # 每次都强制执行，这样配置文件都是全的。
 myenv_create_env_of_user
 
-# 加载工具本身的配置
-#source ${MYENV_TOOL_SRC_PATH}/env/pre_env.sh
-# 加载user环境中的配置
-#source ${MYENV_CUR_CONFIG_PATH}
-
 # TODO 后面这个地址要修改！
-myenv_load_scripts ${MYENV_TOOL_SRC_PATH}/myenv/v1/command
+myenv_load_scripts ${MYENV_TOOL_VERSION_DIR}/command
 
+#echo "myenv_cmd_option_parse_and_do myenv ${MYENV_SUPPORT_CMD} $*"
 myenv_cmd_option_parse_and_do "myenv" "${MYENV_SUPPORT_CMD}" $*
