@@ -26,8 +26,8 @@ source ${MYENV_TOOL_SRC_COMMON_PATH}/utils/utils.sh
 source ${MYENV_TOOL_SRC_COMMON_PATH}/version/version.sh
 source ${MYENV_TOOL_SRC_COMMON_PATH}/cmd_option/cmd_option.sh
 source ${MYENV_TOOL_SRC_COMMON_PATH}/loader/loader.sh
+source ${MYENV_TOOL_SRC_COMMON_PATH}/config/config.sh
+source ${MYENV_TOOL_SRC_COMMON_PATH}/env/env.sh
 
-source ${MYENV_TOOL_SRC_PATH}/config/config.sh
-source ${MYENV_TOOL_SRC_PATH}/env/env.sh
-
+# 加载启动程序的脚本
 myenv_load_scripts ${MYENV_TOOL_MYENV_DIR} "$*"
