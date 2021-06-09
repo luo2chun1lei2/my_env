@@ -11,7 +11,7 @@ function myenv_cmd_option_parse_and_do() {
 #set -x
 	if [ $# -lt 3 ]; then
 		echo "Please input prefix, supported commands and one action at least."
-		exit 1
+		return
 	fi
 
 	local prefix=$1
