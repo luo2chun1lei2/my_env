@@ -106,7 +106,15 @@ function mysh_listd()
 		esac
 	done
 	
-	echo ${MYENV_TMP_PATH[*]}
+	if [ ${#MYENV_TMP_PATH[@]} -eq 0 ]; then
+		return 0
+	fi
+	
+	local index
+	for no in $(seq 1 ${#MYENV_TMP_PATH[@]}); do
+		let index=no-1
+		echo "$index:${MYENV_TMP_PATH[$index]}"
+	done
 }
 
 function mysh_cdd_help()
