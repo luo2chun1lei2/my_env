@@ -50,10 +50,8 @@ function myenv_set_name_of_env_path()
 	# - 删除同名的
 	sed -ri "/^$1:/d" $MYENV_HOME_CONFIG_MAP_NAME_PATH
 	# - 删除同路径的
-	set -x
 	local sed_path=$(echo $path | sed 's/\//\\\//g')
 	sed -i '/:'${sed_path}'$/d' $MYENV_HOME_CONFIG_MAP_NAME_PATH
-	set +x
 	# - 添加新的
 	echo "$1:$path" >> $MYENV_HOME_CONFIG_MAP_NAME_PATH
 	
