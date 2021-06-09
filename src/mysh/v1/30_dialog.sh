@@ -6,7 +6,7 @@ MYENV_SH_SUPPORT_CMD="${MYENV_SH_SUPPORT_CMD} dialog"
 
 function mysh_dialog_help()
 {
-    ${MYENV_TOOL_SH_VERSION_DIR}/exe/dialog
+    ${MYENV_TOOL_SH_VERSION_DIR}/exe/dialog -h
 }
 
 # $* 参数分析！

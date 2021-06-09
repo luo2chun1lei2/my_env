@@ -4,9 +4,7 @@ MYENV_SH_SUPPORT_CMD="${MYENV_SH_SUPPORT_CMD} refresh"
 
 function mysh_refresh_help()
 {
-    PRG_NAME=$(basename "$0")
-    
-    printf '\n%s refresh <target>\n' ${PRG_NAME}
+    printf '\nmysh refresh <target>\n'
     printf '  refresh target\n'
     printf ' <target>:\n'
     printf '  myenv : git pull newest myenv source.\n'

@@ -7,9 +7,7 @@ MYENV_TMP_PATH=()
 
 function mysh_setd_help()
 {
-    PRG_NAME=$(basename "$0")
-    
-    printf '\n%s setd\n' ${PRG_NAME}
+    printf '\nmysh setd\n'
     printf '  set current directory into list\n'
 }
 
@@ -43,9 +41,7 @@ function mysh_setd()
 
 function mysh_unsetd_help()
 {
-    PRG_NAME=$(basename "$0")
-    
-    printf '\n%s unsetd [NO]\n' ${PRG_NAME}
+    printf '\nmysh unsetd [NO]\n'
     printf '  unset path by NO\n'
 }
 
@@ -82,9 +78,7 @@ function mysh_unsetd()
 
 function mysh_listd_help()
 {
-    PRG_NAME=$(basename "$0")
-    
-    printf '\n%s listd\n' ${PRG_NAME}
+    printf '\nmysh listd\n'
     printf '  list all saved path\n'
 }
 
@@ -117,9 +111,7 @@ function mysh_listd()
 
 function mysh_cdd_help()
 {
-    PRG_NAME=$(basename "$0")
-    
-    printf '\n%s cdd [no]\n' ${PRG_NAME}
+    printf '\nmysh cdd [no]\n'
     printf '  cd directory by NO, if not set cd env home.\n'
 }
 
