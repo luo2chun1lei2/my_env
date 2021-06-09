@@ -39,7 +39,7 @@ function mysh_refresh()
 	for target in $*; do
 		case "$target" in
 			myenv)
-				cd ${MYENV_TOOL_PATH} && git pull
+				(cd ${MYENV_TOOL_PATH} && git pull)
 			shift
 			;;
 			*)
