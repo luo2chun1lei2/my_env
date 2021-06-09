@@ -45,6 +45,7 @@ function myenv_info()
 			version)
 				printf "myenv:%s\n" ${MYENV_TOOL_VERSION}
 				printf "mysh :%s\n" ${MYENV_TOOL_SH_VERSION}
+				echo `cd ${MYENV_TOOL_PATH} && git log -1 --pretty=oneline`
 				shift
 				;;
 			name)
