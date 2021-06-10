@@ -76,12 +76,13 @@ my_shell缩写为“mysh”，用于辅助管理使用环境。
 
 ## 目前的任务
 
-1. 解决 按下 TAB 时，会出现错误。
+1. 解决 按下 TAB 时，会出现错误。(OK)
 	PATH 路径也有问题。
-	修改方法 : /usr/share/bash-completion/bash_completion 的 2058 行，加入 declare -A _xspecs.
-	不知道为什么，这个 _xspecs 数组变成了 index array，所以索引不能输入带有"."的文字作为索引。
-	declare -A 是声明为 association array，可以是任意字符串。
-	问题应该没有真的解决。
+	-修改方法 : /usr/share/bash-completion/bash_completion 的 2058 行，加入 declare -A _xspecs.-
+	-不知道为什么，这个 _xspecs 数组变成了 index array，所以索引不能输入带有"."的文字作为索引。-
+	-declare -A 是声明为 association array，可以是任意字符串。-
+	-问题应该没有真的解决。-
+	shell中不再 source ~/.bashrc，避免了问题，上面也不用修改。但是alias之类的设定还需要自己加入。
 2. 实现 myenv mysh <命令> 的功能。
 3. 允许设置 env 中某个文件、文件夹相关的操作，和 context menu 类似。
 4. 脚本可以在不同的机器上运行，只要设定 <env name>@<machine ip>，然后执行就行。
