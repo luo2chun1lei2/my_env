@@ -83,8 +83,9 @@ my_shell缩写为“mysh”，用于辅助管理使用环境。
 	-declare -A 是声明为 association array，可以是任意字符串。-
 	-问题应该没有真的解决。-
 	shell中不再 source ~/.bashrc，避免了问题，上面也不用修改。但是alias之类的设定还需要自己加入。
-2. 实现 myenv mysh <命令> 的功能。
-3. 允许设置 env 中某个文件、文件夹相关的操作，和 context menu 类似。
+2. 允许设置 env 中某个文件、文件夹相关的操作，和 context menu 类似。
+	添加了 context 的命令，但是发现bash在处理复杂的数据结构时，力不从心。
+3. 实现 myenv mysh <命令> 的功能。
 4. 脚本可以在不同的机器上运行，只要设定 <env name>@<machine ip>，然后执行就行。
 5. 实现 filter-do 模式，就是将 “filter” 得到的结果，交给 “do” 去处理。
 	最好能够在 bash 下都可以运行，不然只能定制一个 shell 程序了。

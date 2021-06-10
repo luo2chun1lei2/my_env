@@ -1,0 +1,58 @@
+#!/bin/bash
+# -*- coding:utf-8 -*-
+
+# 处理某个目标的菜单
+# 模仿图形界面的右键，可以显示目标的处理项目。
+# 配置是
+# <pattern>:<name>:<action>
+
+source ${MYENV_TOOL_SH_VERSION_DIR}/exe/_context.sh
+
+function help()
+{
+	printf "\nmysh del_context <target> [option] \n"
+	printf "  delete a context to target\n"
+	printf " [option]\n"
+	printf "  -n/--name: name, if not set name, delete all action of target\n"
+}
+
+# 分析参数
+OPTS=`getopt -o h --long help -n "$(basename $0)" -- "$@"`
+if [ $? != 0 ]; then
+	help
+	return 1
+fi
+eval set -- "$OPTS"
+
+while true ; do
+	case "$1" in
+		-h|--help)
+			help
+			shift
+			exit 0
+			;;
+		--)
+			shift
+			break
+			;;
+		*)
+			help
+			shift
+			exit 1
+			;;
+	esac
+done
+
+target=$1
+changed_target=$(myenv_get_escape_path $1)
+if [ $# == 1 ]; then
+	# 删除 "target:*"
+	sed -i "/^${changed_target}:.*/d" ${CONTEXT_CONFIG_PATH}
+elif [ $# == 2 ]; then
+	# 删除 "target:name:*"
+	sed -i "/^${changed_target}:$2:.*/d" ${CONTEXT_CONFIG_PATH}
+else
+	help
+	exit 1
+fi
+

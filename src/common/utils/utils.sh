@@ -21,6 +21,12 @@ function myenv_get_abbr_path()
 }
 export -f myenv_get_abbr_path
 
+# $1
+function myenv_get_escape_path()
+{
+	echo $1 | sed 's/\//\\\//g'
+}
+
 # 经过判断才创建文件，避免修改文件的时间.
 # $1 path
 function myenv_create_file()
