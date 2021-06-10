@@ -17,10 +17,11 @@ function help()
 	printf "    context : show information of all targets.\n"
 	printf "    context <target>: show information of this target.\n"
 	printf "    context <target> <name>: show information of action of this target.\n"
+	printf "  -t/--tst : just show action content, not execute it.\n"
 }
 
 # 分析参数
-OPTS=`getopt -o hl --long help,list -n "$(basename $0)" -- "$@"`
+OPTS=`getopt -o hlt --long help,list,test -n "$(basename $0)" -- "$@"`
 if [ $? != 0 ]; then
 	help
 	return 1
@@ -28,6 +29,7 @@ fi
 eval set -- "$OPTS"
 
 OPT_LIST=n
+OPT_TEST=n
 while true ; do
 	case "$1" in
 		-h|--help)
@@ -37,6 +39,10 @@ while true ; do
 			;;
 		-l|--list)
 			OPT_LIST=y
+			shift
+			;;
+		-t|--test)
+			OPT_TEST=y
 			shift
 			;;
 		--)
@@ -56,7 +62,10 @@ if [ $OPT_LIST == 'y' ]; then
 else
 	TARGET=$1
 	find_context $* | while read line; do
-		#echo $(eval $(get_action "$line"))
-		eval $(get_action "$line")
+		if [ ${OPT_TEST} == 'y' ]; then
+			echo $(get_action "$line")
+		else
+			eval $(get_action "$line")
+		fi
 	done
 fi
