@@ -46,7 +46,7 @@ function myenv_cmd_option_parse_and_do() {
 		if [ -n "${exe_path}" -a -d ${exe_path} ]; then
 			for f in `find $exe_path -maxdepth 1 -type f  | sort`; do
 				name=$(basename $f)
-				just_name=${name#*.}
+				just_name=${name%%.*}
 				if [ "$just_name" == "$cmd" ]; then
 					$f $@
 					return 0

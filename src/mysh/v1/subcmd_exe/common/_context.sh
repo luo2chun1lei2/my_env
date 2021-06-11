@@ -20,7 +20,7 @@ function find_context()
 	local index=0
 	local found=()
 	#declare -a found
-	grep "${pattern}" ${CONTEXT_CONFIG_PATH} | while read line; do
+	grep "${pattern}" ${CONTEXT_CONFIG_PATH} 2>/dev/null | while read line; do
 		#found[$index]=$line
 		#let index++
 		echo $line

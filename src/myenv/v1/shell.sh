@@ -29,9 +29,8 @@ fi
 # 加载 mysh 的脚本
 ########################################
 
-# 加载 myshe此版本的内部脚本
-#echo "myenv_version_load_folder ${MYENV_TOOL_SRC_PATH}/mysh ${MYENV_TOOL_SH_VERSION}"
-myenv_version_load_folder ${MYENV_TOOL_SRC_PATH}/mysh ${MYENV_TOOL_SH_VERSION}
+# 加载 myshe此版本的内部脚本(subcmd_src)，subcmd_exe在运行时再分析。
+myenv_load_scripts ${MYENV_TOOL_SH_VERSION_SUBCMD_SRC_PATH}
 
 ########################################
 # 跳转目录
