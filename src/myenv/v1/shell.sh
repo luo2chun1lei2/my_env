@@ -39,4 +39,10 @@ myenv_load_scripts ${MYENV_TOOL_SH_VERSION_SUBCMD_SRC_PATH}
 # 跳转到目录中去
 cd ${MYENV_CUR_PATH}
 
+if [ -n "${MYENV_MYSH_CMDLINE}" ]; then
+	mysh ${MYENV_MYSH_CMDLINE}
+	# 执行完就退出。
+	exit 0
+fi
+
 #set +x

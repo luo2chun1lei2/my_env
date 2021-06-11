@@ -24,7 +24,7 @@ function help()
 OPTS=`getopt -o h --long help -n "$(basename $0)" -- "$@"`
 if [ $? != 0 ]; then
 	help
-	return 1
+	exit 1
 fi
 eval set -- "$OPTS"
 
@@ -47,7 +47,7 @@ while true ; do
 	esac
 done
 
-if [ $# -le 3 ]; then
+if [ $# -lt 3 ]; then
 	echo "need at least 3 args($*)=$#."
 	help
 	exit 1
