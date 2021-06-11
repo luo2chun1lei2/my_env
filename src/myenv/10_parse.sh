@@ -20,10 +20,10 @@ export MYENV_CUR_NAME=
 # 每次都强制执行，这样配置文件都是全的。
 myenv_create_env_of_user
 
-# 加载myenv的子命令
+# 加载myenv的子命令(subcmd_src)，subcmd_exe 的用到时再分析.
 myenv_load_scripts ${MYENV_TOOL_VERSION_DIR}/subcmd_src
-CMD_LIST=$(myenv_load_exe ${MYENV_TOOL_VERSION_DIR}/subcmd_exe)
-MYENV_SUPPORT_CMD="${MYENV_SUPPORT_CMD} ${CMD_LIST}"
+#CMD_LIST=$(myenv_load_exe ${MYENV_TOOL_VERSION_DIR}/subcmd_exe)
+#MYENV_SUPPORT_CMD="${MYENV_SUPPORT_CMD} ${CMD_LIST}"
 
 #echo "myenv_cmd_option_parse_and_do \"myenv\" \"${MYENV_SUPPORT_CMD}\" $*"
-myenv_cmd_option_parse_and_do "myenv" "${MYENV_SUPPORT_CMD}" $*
+myenv_cmd_option_parse_and_do ${MYENV_TOOL_VERSION_SUBCMD_EXE_PATH} "myenv" "${MYENV_SUPPORT_CMD}" $*

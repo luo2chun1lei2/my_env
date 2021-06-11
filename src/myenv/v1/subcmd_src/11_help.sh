@@ -34,34 +34,32 @@ function myenv_help()
 		esac
 	done
 	
+	#set -x
 	if [ $# -eq 0 ]; then
 		# 显示所有的命令的帮助信息
 		for cmd in ${MYENV_SUPPORT_CMD}; do
-			if [[ $cmd =~ .*:.* ]]; then
-				cmd_path=${cmd#*:}
-				${cmd_path} -h
-			else
-				myenv_${cmd}_help
-			fi
+			myenv_${cmd}_help
+		done
+
+		for f in `find $MYENV_TOOL_VERSION_SUBCMD_EXE_PATH -maxdepth 1 -type f  | sort`; do
+			${f} -h
 		done
 	else
 		# 显示某个命令的帮助信息
 		for cmd in $*; do
-			echo "${MYENV_SUPPORT_CMD}" | grep -w "$cmd:" >/dev/null 2>&1
-			if [ $? -eq 0 ]; then
-				cmd_path=$(myenv_get_path_by_cmd $cmd ${MYENV_SUPPORT_CMD})
-				if [ -f $cmd_path ]; then
-					${cmd_path} -h
-				else
-					myenv_${cmd}_help
-				fi
-				#if [[ $cmd =~ .*:.* ]]; then
-				#	cmd_path=${cmd#*:}
-				#	${cmd_path} -h
-				#else
-				#	myenv_${cmd}_help
-				#fi
-			else
+			local found=0
+
+			[[ `type -t myenv_${cmd}_help` == "function" ]] && myenv_${cmd}_help && found=1
+
+			if [ $found -eq 0 ]; then
+				for f in `ls -1 ${MYENV_TOOL_VERSION_SUBCMD_EXE_PATH}/${cmd}* 2>/dev/null`; do
+					$f -h
+					found=1
+					break
+				done
+			fi
+				
+			if [ $found -eq 0 ]; then
 				echo "Cannot find command $cmd."
 			fi
 		done

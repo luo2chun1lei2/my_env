@@ -5,7 +5,7 @@
 
 function help()
 {
-	printf "\nmyenv dialog %s\n"
+	printf "\nmyenv dialog2 %s\n"
 	printf "  show a dialog\n"
 }
 

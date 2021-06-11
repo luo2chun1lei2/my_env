@@ -39,6 +39,10 @@ function myenv_info()
 		esac
 	done
 
+	if [ $# == 0 ]; then
+		echo "Need at least one argument."
+		return 1
+	fi
 
 	for targe in $*; do
 		case "$1" in
@@ -57,4 +61,6 @@ function myenv_info()
 				shift ; return 1 ;;
 		esac
 	done
+
+	return 0
 }

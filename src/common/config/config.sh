@@ -1,3 +1,6 @@
+## TODO 下面的函数都没有用上！
+## 是因为 config.sh 设置的版本，没有用上！
+
 
 # $1 config 初始化的文件夹
 function mysh_config_create()
