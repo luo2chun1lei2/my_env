@@ -136,14 +136,14 @@ architecture ---> upgrade interface --> kind 1 modules
 * 实现 myenv mysh <命令> 的功能。 (OK)
 * 独立运行程序，放在文件夹下面，可以立刻使用，而不是需要再进入系统中。(新的加载exe的方法就可以实现) OK
 	function的同样。（没有妥善的方法，所以这个放弃。）
+* 可以复制某个环境的脚本设定等等。  OK
+   1. 比如nebula环境，在不同的机器上是相同的。 或者Alps环境，也是类似的。
+   2. env 之间可以相互引用，和导入。
 
 等待实现：
 * 实现 TAB 按下后，word complete 操作。
-* 可以复制某个环境的脚本设定等等。
-   1. 比如nebula环境，在不同的机器上是相同的。 或者Alps环境，也是类似的。
 * 允许设置 env 中某个文件、文件夹相关的操作，和 context menu 类似。（可用）
 	添加了 context 的命令，但是发现bash在处理复杂的数据结构时，力不从心。
-* env 之间可以相互引用，和导入。
 
 还在规划：
 * 实现 search-do 模式，就是将 “search” 得到的结果，交给 “do” 去处理。
