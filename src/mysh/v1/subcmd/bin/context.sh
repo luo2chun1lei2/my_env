@@ -63,7 +63,9 @@ else
 	TARGET=$1
 	find_context $* | while read line; do
 		if [ ${OPT_TEST} == 'y' ]; then
-			echo $(get_action "$line")
+			# eval 的命令需要执行，所以才加上 “echo”，这样就变成了一行文字。
+			command=$(eval echo $(get_action "$line"))
+			echo $command
 		else
 			eval $(get_action "$line")
 		fi
