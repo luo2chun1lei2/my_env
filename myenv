@@ -25,4 +25,4 @@ source ${MYENV_TOOL_SRC_COMMON_PATH}/loader/loader.sh
 myenv_load_scripts ${MYENV_TOOL_SRC_COMMON_PATH}
 
 # 加载启动程序的脚本
-myenv_load_scripts ${MYENV_TOOL_MYENV_PATH} "$*"
+myenv_load_scripts ${MYENV_TOOL_MYENV_PATH}/startup "$*"
