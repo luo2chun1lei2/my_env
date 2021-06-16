@@ -6,10 +6,10 @@ function myenv_info_help()
 {
     PRG_NAME=$(basename "$0")
     
-    printf '\n%s info target [option]\n' ${PRG_NAME}
+    printf '\n%s info [target] [option]\n' ${PRG_NAME}
     printf '  show information about myenv tool.\n'
 	printf ' [target]\n'
-	printf '  name    show list of name -> path.\n'
+	printf '          show list of name -> path.\n'
 	printf '  kind    kind of myenv and mysh.\n'
 	printf ' [option]\n'
 	printf '  -h/--help    show help.\n'
@@ -40,8 +40,8 @@ function myenv_info()
 	done
 
 	if [ $# == 0 ]; then
-		echo "Need at least one argument."
-		return 1
+		cat ${MYENV_HOME_CONFIG_MAP_NAME_PATH}
+		shift
 	fi
 
 	for targe in $*; do
@@ -50,10 +50,6 @@ function myenv_info()
 				printf "myenv: max=%s, current=%s\n" ${MYENV_TOOL_MAX_KIND} ${MYENV_TOOL_CUR_KIND}
 				printf "mysh : max=%s, current=%s\n" ${MYENV_TOOL_SH_MAX_KIND} ${MYENV_TOOL_SH_CUR_KIND}
 				echo `cd ${MYENV_TOOL_PATH} && echo -n git: && git log -1 --pretty=oneline`
-				shift
-				;;
-			name)
-				cat ${MYENV_HOME_CONFIG_MAP_NAME_PATH}
 				shift
 				;;
 			*)
