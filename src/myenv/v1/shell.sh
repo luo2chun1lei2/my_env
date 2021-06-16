@@ -1,12 +1,9 @@
-#set -x
-
 ########################################
 # 加载共通模块
 ########################################
 
 source ${MYENV_TOOL_SRC_COMMON_PATH}/loader/loader.sh
-source ${MYENV_TOOL_SRC_COMMON_PATH}/cmd_option/cmd_option.sh
-source ${MYENV_TOOL_SRC_COMMON_PATH}/version/version.sh
+myenv_load_scripts ${MYENV_TOOL_SRC_COMMON_PATH}
 
 ########################################
 # 加载额外的脚本和程序
@@ -44,5 +41,3 @@ if [ -n "${MYENV_MYSH_CMDLINE}" ]; then
 	# 执行完就退出。
 	exit 0
 fi
-
-#set +x

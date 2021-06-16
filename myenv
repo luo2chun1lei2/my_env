@@ -1,12 +1,11 @@
 #!/bin/bash
 
 # 作为工具的总入口
-# 设定当前的环境
+# 设定和进入当前的环境
 #  myenv <command> [options]
 #    如果没有 参数，那么找 nearest env。
-# 工作
+# 工作命令（function）
 #  mysh <command> [options]
-#     如果没有 myenv，那么就选择 nearest env。
 
 # 调试设定
 [[ "${TRACE}" ]] && set -x
@@ -22,12 +21,8 @@ export MYENV_TOOL_VERSION=1
 export MYENV_TOOL_SH_VERSION=1
 
 # 加载共通的脚本
-source ${MYENV_TOOL_SRC_COMMON_PATH}/utils/utils.sh
-source ${MYENV_TOOL_SRC_COMMON_PATH}/version/version.sh
-source ${MYENV_TOOL_SRC_COMMON_PATH}/cmd_option/cmd_option.sh
 source ${MYENV_TOOL_SRC_COMMON_PATH}/loader/loader.sh
-source ${MYENV_TOOL_SRC_COMMON_PATH}/config/config.sh
-source ${MYENV_TOOL_SRC_COMMON_PATH}/env/env.sh
+myenv_load_scripts ${MYENV_TOOL_SRC_COMMON_PATH}
 
 # 加载启动程序的脚本
 myenv_load_scripts ${MYENV_TOOL_MYENV_DIR} "$*"

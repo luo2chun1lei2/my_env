@@ -1,3 +1,4 @@
+# 加载脚本类的工具都在这里。
 
 # $1: path
 # $*: parameter
@@ -17,6 +18,8 @@ function myenv_load_scripts()
 
 	return 0
 }
+
+export -f myenv_load_scripts
 
 # Just set path to bin
 # $1: path
