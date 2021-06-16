@@ -10,7 +10,7 @@ myenv_load_scripts ${MYENV_TOOL_SRC_COMMON_PATH}
 ########################################
 
 # 加载TOOL中的脚本和bin
-myenv_load_scripts ${MYENV_TOOL_VERSION_DIR}/shell_source
+myenv_load_scripts ${MYENV_TOOL_VERSION_PATH}/shell_source
 
 # 加载HOME ENV中的脚本和bin
 myenv_load_scripts ${MYENV_HOME_CONFIG_SOURCE_PATH}
