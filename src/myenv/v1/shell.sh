@@ -26,7 +26,7 @@ fi
 # 加载 mysh 的脚本
 ########################################
 
-# 加载 myshe此版本的内部脚本(subcmd_src)，subcmd_exe在运行时再分析。
+# 加载 myshe此版本的内部脚本(subcmd/src)，subcmd/bin在运行时再分析。
 myenv_load_scripts ${MYENV_TOOL_SH_VERSION_SUBCMD_SRC_PATH}
 
 ########################################
