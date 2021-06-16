@@ -3,6 +3,10 @@
 my_env 缩写为“myenv”，用于辅助管理使用环境。
 其中用于调用各种命令的执行，叫做 mysh (=my shell)。
 
+.bashrc 中加入
+export PATH=$PATH:/..../my_env
+source /..../my_env/myenv.complete
+
 ## 需求
 【描述对此软件的需要，可以是具体的，也可以是抽象的，最好是抽象的，这样有多种功能实现余地】
 【对于需求的描述，需要如实记录，后面要进行整理，不能出现缺漏和矛盾的地方】
@@ -139,9 +143,9 @@ architecture ---> upgrade interface --> kind 1 modules
 * 可以复制某个环境的脚本设定等等。  OK
    1. 比如nebula环境，在不同的机器上是相同的。 或者Alps环境，也是类似的。
    2. env 之间可以相互引用，和导入。
+* 实现 TAB 按下后，word complete 操作。
 
 等待实现：
-* 实现 TAB 按下后，word complete 操作。
 * 允许设置 env 中某个文件、文件夹相关的操作，和 context menu 类似。（可用）
 	添加了 context 的命令，但是发现bash在处理复杂的数据结构时，力不从心。
 

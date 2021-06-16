@@ -1,0 +1,66 @@
+#!/bin/bash
+
+# 用于 myenv 的 complete功能。
+# 不可以单独执行。
+
+function _myenv_complete()
+{
+    if [[ "${COMP_CWORD}" == "1" ]]; then
+        COMP_WORD=$(myenv complete)
+        COMPREPLY=($(compgen -W "$COMP_WORD" -- ${COMP_WORDS[${COMP_CWORD}]}))
+    elif [[ "${COMP_CWORD}" == "2" ]]; then
+        case ${COMP_WORDS[$[$COMP_CWORD-1]]} in
+            mysh)
+                # 显示 mysh 可以显示的参数
+                COMP_WORD=$(myenv mysh complete)
+                COMPREPLY=($(compgen -W "$COMP_WORD" -- ${COMP_WORDS[${COMP_CWORD}]}))
+            ;;
+            enter)
+                # 显示 enter 可以进入的项目
+                COMP_WORD=$(myenv info -n)
+                COMPREPLY=($(compgen -W "$COMP_WORD" -- ${COMP_WORDS[${COMP_CWORD}]}))
+            ;;
+        esac
+    fi
+}
+# 注册命令补全函数
+complete -F _myenv_complete myenv
+
+
+# 例子，不用维护
+function _myenv_complete_xx()
+{
+    if [[ "${COMP_CWORD}" == "1" ]];then
+        COMP_WORD="-f -d -cf -cd --current-file --current-directory --file --directory --user --group --help"
+        COMPREPLY=($(compgen -W "$COMP_WORD" -- ${COMP_WORDS[${COMP_CWORD}]}))
+    else
+        case ${COMP_WORDS[$[$COMP_CWORD-1]]} in
+            -d|--directory)
+                # 提示/etc/目录下的所有目录
+                COMP_FILE=$(find /etc/ -maxdepth 1 -type d -print | xargs -n1 basename)
+                COMPREPLY=($(compgen -W "${COMP_FILE}" ${COMP_WORDS[${COMP_CWORD}]}))
+            ;;
+            -f|--file)
+                # 提示/etc/目录下的所有文件
+                COMP_FILE=$(find /etc/ -maxdepth 1 -type f -print | xargs -n1 basename)
+                COMPREPLY=($(compgen -W "${COMP_FILE}" ${COMP_WORDS[${COMP_CWORD}]}))
+            ;;
+            -cf|--current-file)
+                # 提示当前目录下的文件
+                COMPREPLY=($(compgen -f ${COMP_WORDS[${COMP_CWORD}]}))
+            ;;
+            -cd|--current-directory)
+                # 提示当前目录下的目录
+                COMPREPLY=($(compgen -d ${COMP_WORDS[${COMP_CWORD}]}))
+            ;;
+            --user)
+                # 提示当前系统的所有用户
+                COMPREPLY=($(compgen -u ${COMP_WORDS[${COMP_CWORD}]}))
+            ;;
+            --group)
+                # 提示当前系统的所有组
+                COMPREPLY=($(compgen -g ${COMP_WORDS[${COMP_CWORD}]}))
+            ;;
+        esac
+    fi
+}
