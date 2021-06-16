@@ -6,7 +6,7 @@
 function mysh()
 {
 	# 分析命令的参数
-	myenv_cmd_option_parse_and_do ${MYENV_TOOL_SH_VERSION_SUBCMD_EXE_PATH} "mysh" "${MYENV_SH_SUPPORT_CMD}" $*
+	myenv_cmd_option_parse_and_do ${MYENV_TOOL_SH_CUR_KIND_SUBCMD_EXE_PATH} "mysh" "${MYENV_SH_SUPPORT_CMD}" $*
 }
 
 export -f mysh

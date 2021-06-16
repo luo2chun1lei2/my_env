@@ -21,6 +21,6 @@ export MYENV_CUR_NAME=
 myenv_create_env_of_user
 
 # 加载myenv的子命令(subcmd/src)，subcmd/bin 的用到时再分析.
-myenv_load_scripts ${MYENV_TOOL_VERSION_PATH}/subcmd/src
+myenv_load_scripts ${MYENV_TOOL_CUR_KIND_PATH}/subcmd/src
 
-myenv_cmd_option_parse_and_do ${MYENV_TOOL_VERSION_SUBCMD_EXE_PATH} "myenv" "${MYENV_SUPPORT_CMD}" $*
+myenv_cmd_option_parse_and_do ${MYENV_TOOL_CUR_KIND_SUBCMD_EXE_PATH} "myenv" "${MYENV_SUPPORT_CMD}" $*

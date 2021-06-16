@@ -6,7 +6,7 @@
 # 配置是
 # <pattern>:<name>:<action>
 
-source ${MYENV_TOOL_SH_VERSION_SUBCMD_EXE_PATH}/common/_context.sh
+source ${MYENV_TOOL_SH_CUR_KIND_SUBCMD_EXE_PATH}/common/_context.sh
 
 function help()
 {

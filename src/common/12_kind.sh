@@ -4,9 +4,9 @@
 # 作为统一的文件路径拼凑函数。
 # $1 脚本的总目录
 # $2 类型
-function myenv_kind_get_folder()
+function myenv_kind_get_path()
 {
-	echo "$1/k$2"
+	echo "$1/v$2"
 }
 
 # 根据文件获取kind信息

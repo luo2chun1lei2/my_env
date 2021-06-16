@@ -10,7 +10,7 @@ myenv_load_scripts ${MYENV_TOOL_SRC_COMMON_PATH}
 ########################################
 
 # 加载TOOL中的脚本和bin
-myenv_load_scripts ${MYENV_TOOL_SH_VERSION_PATH}/startup
+myenv_load_scripts ${MYENV_TOOL_SH_CUR_KIND_PATH}/startup
 
 # 加载HOME ENV中的脚本和bin
 myenv_load_scripts ${MYENV_HOME_CONFIG_SOURCE_PATH}
@@ -27,7 +27,7 @@ fi
 ########################################
 
 # 加载 myshe此版本的内部脚本(subcmd/src)，subcmd/bin在运行时再分析。
-myenv_load_scripts ${MYENV_TOOL_SH_VERSION_SUBCMD_SRC_PATH}
+myenv_load_scripts ${MYENV_TOOL_SH_CUR_KIND_SUBCMD_SRC_PATH}
 
 ########################################
 # 跳转目录

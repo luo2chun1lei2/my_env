@@ -17,8 +17,11 @@ export MYENV_TOOL_MYENV_PATH="${MYENV_TOOL_SRC_PATH}/myenv"
 
 # 工具本身的环境变量。
 export MYENV_TOOL_SRC_COMMON_PATH="${MYENV_TOOL_SRC_PATH}/common"
-export MYENV_TOOL_VERSION=1
-export MYENV_TOOL_SH_VERSION=1
+
+export MYENV_TOOL_MAX_KIND=1
+export MYENV_TOOL_CUR_KIND=1
+export MYENV_TOOL_SH_MAX_KIND=1
+export MYENV_TOOL_SH_CUR_KIND=1
 
 # 加载共通的脚本
 source ${MYENV_TOOL_SRC_COMMON_PATH}/loader/loader.sh

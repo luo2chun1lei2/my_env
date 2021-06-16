@@ -10,7 +10,7 @@ function myenv_info_help()
     printf '  show information about myenv tool.\n'
 	printf ' [target]\n'
 	printf '  name    show list of name -> path.\n'
-	printf '  version version of myenv and mysh.\n'
+	printf '  kind    kind of myenv and mysh.\n'
 	printf ' [option]\n'
 	printf '  -h/--help    show help.\n'
 }
@@ -46,10 +46,10 @@ function myenv_info()
 
 	for targe in $*; do
 		case "$1" in
-			version)
-				printf "myenv:%s\n" ${MYENV_TOOL_VERSION}
-				printf "mysh :%s\n" ${MYENV_TOOL_SH_VERSION}
-				echo `cd ${MYENV_TOOL_PATH} && git log -1 --pretty=oneline`
+			kind)
+				printf "myenv: max=%s, current=%s\n" ${MYENV_TOOL_MAX_KIND} ${MYENV_TOOL_CUR_KIND}
+				printf "mysh : max=%s, current=%s\n" ${MYENV_TOOL_SH_MAX_KIND} ${MYENV_TOOL_SH_CUR_KIND}
+				echo `cd ${MYENV_TOOL_PATH} && echo -n git: && git log -1 --pretty=oneline`
 				shift
 				;;
 			name)

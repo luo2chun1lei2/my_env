@@ -40,7 +40,7 @@ function mysh_help()
 			${prefix}_${cmd}_help
 		done
 
-		for f in `find $MYENV_TOOL_SH_VERSION_SUBCMD_EXE_PATH -maxdepth 1 -type f  | sort`; do
+		for f in `find $MYENV_TOOL_SH_CUR_KIND_SUBCMD_EXE_PATH -maxdepth 1 -type f  | sort`; do
 			${f} -h
 		done
 	else
@@ -51,7 +51,7 @@ function mysh_help()
 			[[ `type -t ${prefix}_${cmd}_help` == "function" ]] && ${prefix}_${cmd}_help && found=1
 
 			if [ $found -eq 0 ]; then
-				for f in `ls -1 ${MYENV_TOOL_SH_VERSION_SUBCMD_EXE_PATH}/${cmd}* 2>/dev/null`; do
+				for f in `ls -1 ${MYENV_TOOL_SH_CUR_KIND_SUBCMD_EXE_PATH}/${cmd}* 2>/dev/null`; do
 					$f -h
 					found=1
 					break
