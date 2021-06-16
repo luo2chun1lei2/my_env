@@ -1,6 +1,4 @@
 
-source ${MYENV_TOOL_SRC_PATH}/common/utils/utils.sh
-
 CONTEXT_CONFIG_PATH=${MYENV_CUR_CONFIG_DATA_PATH}/context.txt
 
 # [$1] target

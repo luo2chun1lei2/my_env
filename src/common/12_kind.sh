@@ -27,3 +27,16 @@ function myenv_kind_get_by_file()
 
 	echo $1
 }
+
+# 将kind写入到文件中。
+# $1 kind file path
+# $2 kind value as string
+function mysh_kind_create_file()
+{
+	local DIR=`dirname $1`
+	mkdir -p $DIR
+	
+	echo "$2" > $1
+	return 0
+}
+

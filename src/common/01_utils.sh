@@ -1,4 +1,6 @@
+# 没有具体的功能，琐碎的函数
 
+# 得到绝对路径。
 # $1 : path
 function myenv_get_full_path()
 {
@@ -21,7 +23,8 @@ function myenv_get_abbr_path()
 }
 export -f myenv_get_abbr_path
 
-# $1
+# 变成 sed 可以用的 path
+# $1 path
 function myenv_get_escape_path()
 {
 	echo $1 | sed 's/\//\\\//g'
