@@ -13,13 +13,13 @@ myenv_load_scripts ${MYENV_TOOL_SRC_COMMON_PATH}
 myenv_load_scripts ${MYENV_TOOL_SH_CUR_KIND_PATH}/startup
 
 # 加载HOME ENV中的脚本和bin
-myenv_load_scripts ${MYENV_HOME_CONFIG_SOURCE_PATH}
-myenv_load_bin_to_path ${MYENV_HOME_CONFIG_BIN_PATH}
+myenv_load_scripts ${MYENV_HOME_ENV_SOURCE_PATH}
+myenv_load_bin_to_path ${MYENV_HOME_ENV_BIN_PATH}
 
-if [ "${MYENV_HOME_CONFIG_PATH}" != "${MYENV_CUR_CONFIG_PATH}" ]; then
+if [ "${MYENV_HOME_ENV_PATH}" != "${MYENV_CUR_ENV_PATH}" ]; then
 	# 加载用户自定义的脚本和bin
-	myenv_load_scripts ${MYENV_CUR_CONFIG_SOURCE_PATH}
-	myenv_load_bin_to_path ${MYENV_CUR_CONFIG_BIN_PATH}
+	myenv_load_scripts ${MYENV_CUR_ENV_SOURCE_PATH}
+	myenv_load_bin_to_path ${MYENV_CUR_ENV_BIN_PATH}
 fi
 
 ########################################

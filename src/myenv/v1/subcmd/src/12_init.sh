@@ -61,11 +61,11 @@ function myenv_init()
 	if [ $# -eq 0 ]; then
 		# 按照当前的路径算
 		MYENV_CUR_NAME=
-		MYENV_CUR_PATH=$(pwd)
+		myenv_set_cur_path $(pwd)
 	elif [ $# -eq 1 ]; then
 		# 如果有路径
 		MYENV_CUR_NAME=
-		MYENV_CUR_PATH=$(myenv_get_full_path ${1})
+		myenv_set_cur_path $(myenv_get_full_path ${1})
 	else
 		# 需要创建的太多了！
 		myenv_init_help
@@ -73,7 +73,7 @@ function myenv_init()
 	fi
 
 	# 无论是否存在，都要创建，这样可以加入新的文件夹和文件，但是已有内容不会修改。
-	myenv_create_env_by_path ${MYENV_CUR_PATH}
+	myenv_create_env_by_path ${MYENV_CUR_PATH}/.myenv
 	if [ $? -ne 0 ]; then
 		exit 1
 	fi

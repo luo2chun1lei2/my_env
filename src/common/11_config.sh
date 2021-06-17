@@ -1,5 +1,3 @@
-## TODO 下面的函数都没有用上！
-## 是因为 config.sh 设置的版本，没有用上！
 
 # 生成 config文件。
 # $1 config file path
@@ -13,8 +11,21 @@ function mysh_config_create()
 	fi
 	
 	mkdir -p ${CONFIG_DIR}
-	touch ${CONFIG_DIR}/config.sh
+	myenv_create_file ${CONFIG_PATH}
 	# 文件的内容由用户自己填写。
 	
+	return 0
+}
+
+# 读取 config　文件。
+# $1 config file path
+function mysh_config_read()
+{
+	if [ ! -f $1 ]; then
+		return 1
+	fi
+
+	source $1
+
 	return 0
 }

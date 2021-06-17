@@ -148,6 +148,7 @@ architecture ---> upgrade interface --> kind 1 modules
 等待实现：
 * 允许设置 env 中某个文件、文件夹相关的操作，和 context menu 类似。（可用）
 	添加了 context 的命令，但是发现bash在处理复杂的数据结构时，力不从心。
+* 可以通过配置文件等，使用其他环境的脚本。
 
 还在规划：
 * 实现 search-do 模式，就是将 “search” 得到的结果，交给 “do” 去处理。
@@ -168,3 +169,4 @@ architecture ---> upgrade interface --> kind 1 modules
     场景是用来使用远程服务器，分布使用，并且将一系列的工作放在一个脚本中运行。
 	1. 可以公开某个机器的env，其他机器可以登录并使用。
 	2. 脚本可以运行在任意环境中。参考 dsh，注意避免没有必要的繁琐实现。
+* 版本或种类管理需要再考虑一下。主要是目前没有明确的需求。

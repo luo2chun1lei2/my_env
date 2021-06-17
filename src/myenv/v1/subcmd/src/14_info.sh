@@ -49,10 +49,10 @@ function myenv_info()
 
 	if [ $# == 0 ]; then
 		if [ "${OPT_JUST_NAME}" == 'y' ]; then
-			cat ${MYENV_HOME_CONFIG_MAP_NAME_PATH} | awk -F ":" '{print $1}'
+			cat ${MYENV_HOME_ENV_MAP_NAME_PATH} | awk -F ":" '{print $1}'
 			myenv_find_nearest_env_path `pwd`
 		else
-			cat ${MYENV_HOME_CONFIG_MAP_NAME_PATH}
+			cat ${MYENV_HOME_ENV_MAP_NAME_PATH}
 			myenv_find_nearest_env_path `pwd`
 		fi
 		shift

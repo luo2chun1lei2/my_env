@@ -1,6 +1,6 @@
 source ${MYENV_TOOL_SRC_COMMON_PATH}/01_utils.sh
 
-CONTEXT_CONFIG_PATH=${MYENV_CUR_CONFIG_DATA_PATH}/context.txt
+CONTEXT_CONFIG_PATH=${MYENV_CUR_ENV_DATA_PATH}/context.txt
 
 # [$1] target
 # [$2] name

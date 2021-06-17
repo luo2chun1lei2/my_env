@@ -9,5 +9,6 @@ function myenv_enter_env()
 
 # 进入env的新shell环境中。
 if [ "${MYENV_ENTER_ENV}" == 'y' ]; then
+	myenv_create_env_by_path ${MYENV_CUR_ENV_PATH}
 	myenv_enter_env
 fi
