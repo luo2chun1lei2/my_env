@@ -37,3 +37,11 @@ function myenv_set_cur_path()
     export MYENV_CUR_ENV_DATA_PATH="${MYENV_CUR_ENV_PATH}/data"
 
 }
+
+#######################################
+# .myenv/config.sh 中的设置项目
+#######################################
+
+# 牵连其他的环境，进入环境后，导入 $NEEDS/source 和 $NEEDS/bin。
+# 可以有多个，中间用“:”来分割。
+export MYENV_NEEDS=

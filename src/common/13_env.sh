@@ -128,3 +128,44 @@ function mysh_find_env()
 
     return 0
 }
+
+# 找到 myenv
+# $1 : name or path
+# return "<name>:<path>"
+function mysh_find_env2()
+{
+    local OPT_INPUT=$1
+	local cur_name cur_path
+	if [ -n "$OPT_INPUT" ]; then
+		# Input 按照名字来分析
+		cur_name="${OPT_INPUT}"
+		cur_path=$(myenv_find_env_path_by_name ${cur_name})
+		cur_path=$(myenv_check_env_path ${cur_path})
+
+		if [ -z "${cur_path}" ]; then
+			# Input不是名字，当做路径
+			cur_name=
+			cur_path=$(myenv_check_env_path ${OPT_INPUT})
+
+			if [ -z "${cur_path}" ]; then
+				# 还是无法定位环境
+				echo "Input is not a name or valid path."
+				return 1
+			else
+				cur_path=$(myenv_get_full_path ${cur_path})
+			fi
+		fi
+	else
+		# 没有Input，就找最近的环境
+		cur_name=
+		cur_path=$(myenv_find_nearest_env_path $(pwd))
+		if [ -z "${cur_path}" ]; then
+			echo "Cannot find one valid env."
+			return 2
+		fi
+	fi
+
+	echo "${cur_name}:${cur_path}"
+
+    return 0
+}

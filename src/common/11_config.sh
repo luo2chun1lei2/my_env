@@ -29,3 +29,17 @@ function mysh_config_read()
 
 	return 0
 }
+
+# $1 : 关联的 .myenv 的名字或者路径！用":"分开。
+function mysh_config_load_needs()
+{
+	local found
+	for one in `echo $1 | tr ':' ' '`; do
+		found=$(mysh_find_env2 $one)
+		if [ $? -eq 0 ]; then
+			local myenv_path=${found#*:}
+			myenv_load_bin_to_path $myenv_path/.myenv/bin
+			myenv_load_scripts $myenv_path/.myenv/source
+		fi
+	done
+}
