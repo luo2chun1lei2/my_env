@@ -143,14 +143,12 @@ architecture ---> upgrade interface --> kind 1 modules
 * 可以复制某个环境的脚本设定等等。  OK
    1. 比如nebula环境，在不同的机器上是相同的。 或者Alps环境，也是类似的。
    2. env 之间可以相互引用，和导入。
-* 实现 TAB 按下后，word complete 操作。
+* 实现 TAB 按下后，word complete 操作。 OK
+* 可以通过配置文件等，使用其他环境的脚本。 OK
 
 等待实现：
 * 允许设置 env 中某个文件、文件夹相关的操作，和 context menu 类似。（可用）
 	添加了 context 的命令，但是发现bash在处理复杂的数据结构时，力不从心。
-* 可以通过配置文件等，使用其他环境的脚本。
-
-还在规划：
 * 实现 search-do 模式，就是将 “search” 得到的结果，交给 “do” 去处理。
 	最好能够在 bash 下都可以运行，不然只能定制一个 shell 程序了。
 	1. 我们很多的动作都是先search，然后根据 search 的结果操作。
@@ -159,6 +157,9 @@ architecture ---> upgrade interface --> kind 1 modules
 	这样就方便操作了。
 	4. search-do 需要把内部执行的命令的导出都放入临时文件，然后下面一个命令就可以获取。
       	1. content -> do -> content
+
+还在规划：
+
 * 是否加入一个 IDE 环境，显示 某个目标的 context ?
    1.  目标的列表
    2.  目标的动作列表
