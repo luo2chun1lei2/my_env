@@ -2,13 +2,15 @@
 
 function mysh_prompt()
 {
-    info=" "
+    info=""
     
     if [ -n "${MYENV_CUR_NAME}" ]; then
 		info="${info}ENV:${MYENV_CUR_NAME} "
 	else
 		info="${info}ENV:$(myenv_get_abbr_path ${MYENV_CUR_PATH}) "
 	fi
+
+    info="${info}SH:${SHLVL} "
 
     # find ss-local
     ss_pid=`pidof ss-local 2>/dev/null`
