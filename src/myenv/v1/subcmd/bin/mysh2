@@ -103,8 +103,8 @@ class MyShellBase(object):
                     for s in rs:
                         if s == sys.stdin:  # 来自控制台的输入，是用户的命令
                             ch = os.read(sys.stdin.fileno(), 1024) # <--- TODO 有大小，是否不应该要！
-                            #if len(ch) < 1024:
-                            #    self.on_input_end(ch)
+                            if len(ch) < 1024:
+                                self.on_input_end(ch)
                             os.write(self.master_fd, ch)
 
                         else:  # 来自SHELL的输出，是用户命令执行的结果。
@@ -113,7 +113,10 @@ class MyShellBase(object):
                                 str_rlt = os.read(self.master_fd, 2048) # <--- TODO 有大小，是否不应该要！
                                 
                                 # 调用结果的回调函数
-                                self.on_output_end(str_rlt)
+                                is_end = False
+                                if len(str_rlt) < 2048:
+                                    is_end = True
+                                self.on_output_end(str_rlt, is_end)
                                 
                                 # 显示结果
                                 self.print_str(str_rlt)
@@ -137,7 +140,7 @@ class MyShellBase(object):
         # 当输入命令时
         pass
 
-    def on_output_end(self, str):
+    def on_output_end(self, str, is_end):
         # 当输出命令时
         pass
 
@@ -201,28 +204,38 @@ class MyShell(MyShellBase):
         for i in range(save_count):
             #input = os.tmpfile()
             #output = os.tmpfile()
-            input = os.open(os.tmpnam(), os.O_RDWR|os.O_CREAT)
-            output = os.open(os.tmpnam(), os.O_RDWR|os.O_CREAT)
-            os.write(output, "aaaa")
+            #input = os.open(os.tmpnam(), os.O_RDWR|os.O_CREAT)
+            #output = os.open(os.tmpnam(), os.O_RDWR|os.O_CREAT)
+            name = "/tmp/tmp_%s_i" % i
+            input = open(name, "w+")
+            name = "/tmp/tmp_%s_o" % i
+            output = open(name, "w+")
             self.saved.append([input, output])
+
+        self.is_start = True
 
     def on_input_end(self, str):
         # 当输入命令时
         input_output = self.saved.get()
 
-        if str == "hhh":
-            self.print_str("need hhh")
+        input_output[0].write(str)
 
-        os.write(input_output[0], str)
-
-    def on_output_end(self, str):
+    def on_output_end(self, str, is_end):
 
         input_output = self.saved.get()
         if input_output is None:
             return
-        os.write(input_output[1], str)
 
-        self.saved.next()
+        if self.is_start:
+            #os.truncate(input_output[1], 0)
+            input_output[1].truncate()
+            self.is_start = False
+
+        input_output[1].write(str)
+
+        if is_end:
+            self.saved.next()
+            self.is_start = True
 
 def main(argv):
     locale.setlocale(locale.LC_ALL, locale='en_US.UTF-8')
