@@ -159,7 +159,9 @@ architecture ---> upgrade interface --> kind 1 modules
       	1. content -> do -> content
 
 还在规划：
-
+* 是否加入一个Frame，可以在上下左右显示不同的信息，
+	比如底部显示正在进行的工作Job，上面显示系统的状态等。
+	参考pymux等。
 * 是否加入一个 IDE 环境，显示 某个目标的 context ?
    1.  目标的列表
    2.  目标的动作列表
