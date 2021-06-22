@@ -6,11 +6,10 @@ source ${MYENV_TOOL_SRC_COMMON_PATH}/13_env.sh
 
 function help()
 {
-	printf "\nmyenv import <target> [options]\n"
+	printf "\nmysh import <target> [options]\n"
 	printf "  import bin and source here.\n"
 	printf "  [options].\n"
 	printf "    -d/--data : import with data.\n"
-
 }
 
 # 分析参数

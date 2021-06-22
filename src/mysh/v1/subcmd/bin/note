@@ -1,0 +1,181 @@
+#!/bin/bash
+
+# 记录某些目标的信息，供以后查询使用。
+# * 数据记录在 .myenv/data/note 下面。
+# * map文件时 map_note
+# ** 每一行：    <target>:<note name>
+# *** key: target 的名字或者路径
+# *** value: 文本文件的名字。
+# * note文件是随机文件名字。
+
+source ${MYENV_TOOL_SRC_COMMON_PATH}/01_utils.sh
+source ${MYENV_TOOL_SRC_COMMON_PATH}/13_env.sh
+
+NOTE_HOME_PATH=${MYENV_CUR_ENV_DATA_PATH}/note
+MAP_NOTE_PATH=${NOTE_HOME_PATH}/map_note
+
+# 根据 target 找到 note
+# [$1] target
+function find_note()
+{
+	local pattern
+	if [ $# -eq 0 ]; then
+		pattern=".*"
+	elif [ $# -eq 1 ]; then
+		escaped=$(myenv_get_escape_path $1)
+		pattern="^${escaped}:.*"
+	fi
+	
+	# 不能用 for，这个读取后，每行还以“空格”来分给每行
+	grep "${pattern}" ${MAP_NOTE_PATH} 2>/dev/null | while read line; do
+		echo $line
+	done
+}
+
+# $1 一行信息
+function get_target()
+{
+	echo ${1%%:*}
+}
+
+# $1 一行信息
+function get_note_name()
+{
+	echo ${1##*:}
+}
+
+# $1 target name
+# return 添加的 note 的名字
+function add_note()
+{
+	real_target=$1
+	note_name=$(basename $(mktemp -p ${NOTE_HOME_PATH} note.XXX))
+	echo "${real_target}:${note_name}" >> ${MAP_NOTE_PATH}
+	touch ${NOTE_HOME_PATH}/${note_name}
+
+	echo ${note_name}
+}
+
+# $1 : target name
+function delete_note()
+{
+	line=$(find_note $1)
+	if [ -z "$line" ]; then
+		return
+	fi
+
+	escaped_target=$(myenv_get_escape_path $1)
+	sed -i '/^'${1}':.*/d' ${MAP_NOTE_PATH}
+
+	note_name=$(get_note_name $line)
+	rm -f ${NOTE_HOME_PATH}/${note_name}
+}
+
+function help()
+{
+	printf "\nmysh note [target] [options]\n"
+	printf "  write or read note to target.\n"
+	printf "  if target is empty, note is about myenv.\n"
+	printf "  [options].\n"
+	printf "    -e/--edit edit or add note.\n"
+	printf "    -d/--delete delete note.\n"
+	printf "    -l/--list list all targets.\n"
+}
+
+# 分析参数
+OPTS=`getopt -o hedl --long help,edit,delete,list -n "$(basename $0)" -- "$@"`
+if [ $? != 0 ]; then
+	help
+	return 1
+fi
+
+eval set -- "$OPTS"
+
+OPT_DO=r
+while true ; do
+	case "$1" in
+		-h|--help)
+			help
+			shift
+			exit 0
+			;;
+		-e|--edit)
+			OPT_DO=e
+			shift
+			;;
+		-d|--delete)
+			OPT_DO=d
+			shift
+			;;
+		-l|--list)
+			OPT_DO=l
+			shift
+			;;
+		--)
+			shift
+			break
+			;;
+		*)
+			help
+			shift
+			exit 1
+			;;
+	esac
+done
+
+myenv_create_dir ${NOTE_HOME_PATH}
+myenv_create_file ${MAP_NOTE_PATH}
+
+if [ $OPT_DO == 'l' ]; then
+	# list all targs or given targets.
+
+	if [ $# -eq 0 ]; then
+		for one in `find_note`; do
+			get_target $one
+		done
+	else
+		for target in $*; do
+			for one in `find_note $target`; do
+				get_target $one
+			done
+		done
+	fi
+
+	exit 0
+fi
+
+if [ $# -gt 1 ]; then
+	help
+	exit 1
+fi
+
+if [ $# -eq 1 ]; then
+	target=$1
+	escaped_target=$(myenv_get_escape_path $target)
+else
+	# 当前 .myenv 的。
+	escaped_target="."
+fi
+
+if [ "$OPT_DO" == "r" ]; then
+	# read only
+	line=$(find_note $escaped_target)
+	if [ -n "$line" ]; then
+		note_name=$(get_note_name $line)
+		cat ${NOTE_HOME_PATH}/${note_name}
+	fi
+elif [ "$OPT_DO" == "d" ]; then
+	# delete
+	delete_note $escaped_target
+elif [ "$OPT_DO" == "e" ]; then
+	# add or edit.
+	line=$(find_note $escaped_target)
+	if [ -n "$line" ]; then
+		vi ${NOTE_HOME_PATH}/`get_note_name $line`
+	else
+		note_name=$(add_note $escaped_target)
+		vi ${NOTE_HOME_PATH}/${note_name}
+	fi
+fi
+
+exit 0

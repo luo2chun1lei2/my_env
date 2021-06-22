@@ -59,9 +59,9 @@ shift 2
 
 action="$@"
 
-changed_target=$(myenv_get_escape_path $target)
+escaped_target=$(myenv_get_escape_path $target)
 
 # 删除 "target:name:*"
-sed -i "/^${changed_target}:${name}:.*/d" ${CONTEXT_CONFIG_PATH}
+sed -i "/^${escaped_target}:${name}:.*/d" ${CONTEXT_CONFIG_PATH}
 
 echo "${target}:${name}:${action}" >> ${CONTEXT_CONFIG_PATH}

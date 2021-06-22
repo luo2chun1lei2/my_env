@@ -38,6 +38,7 @@ function get_action()
 	echo $action
 }
 
+# $1 一行信息
 function get_target()
 {
 	echo ${1%%:*}
