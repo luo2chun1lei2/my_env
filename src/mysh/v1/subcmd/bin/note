@@ -22,8 +22,7 @@ function find_note()
 	if [ $# -eq 0 ]; then
 		pattern=".*"
 	elif [ $# -eq 1 ]; then
-		escaped=$(myenv_get_escape_path $1)
-		pattern="^${escaped}:.*"
+		pattern="^${1}:.*"
 	fi
 	
 	# 不能用 for，这个读取后，每行还以“空格”来分给每行
@@ -65,7 +64,7 @@ function delete_note()
 	fi
 
 	escaped_target=$(myenv_get_escape_path $1)
-	sed -i '/^'${1}':.*/d' ${MAP_NOTE_PATH}
+	sed -i "/^${escaped_target}:.*/d" ${MAP_NOTE_PATH}
 
 	note_name=$(get_note_name $line)
 	rm -f ${NOTE_HOME_PATH}/${note_name}
@@ -151,29 +150,28 @@ fi
 
 if [ $# -eq 1 ]; then
 	target=$1
-	escaped_target=$(myenv_get_escape_path $target)
 else
 	# 当前 .myenv 的。
-	escaped_target="."
+	target="."
 fi
 
 if [ "$OPT_DO" == "r" ]; then
 	# read only
-	line=$(find_note $escaped_target)
+	line=$(find_note $target)
 	if [ -n "$line" ]; then
 		note_name=$(get_note_name $line)
 		cat ${NOTE_HOME_PATH}/${note_name}
 	fi
 elif [ "$OPT_DO" == "d" ]; then
 	# delete
-	delete_note $escaped_target
+	delete_note $target
 elif [ "$OPT_DO" == "e" ]; then
 	# add or edit.
-	line=$(find_note $escaped_target)
+	line=$(find_note $target)
 	if [ -n "$line" ]; then
 		vi ${NOTE_HOME_PATH}/`get_note_name $line`
 	else
-		note_name=$(add_note $escaped_target)
+		note_name=$(add_note $target)
 		vi ${NOTE_HOME_PATH}/${note_name}
 	fi
 fi
