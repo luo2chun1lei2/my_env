@@ -1,6 +1,7 @@
 # 没有具体的功能，琐碎的函数
 
 # 得到绝对路径。
+# 可以用 realpath $1 来实现。
 # $1 : path
 function myenv_get_full_path()
 {
@@ -11,6 +12,25 @@ function myenv_get_full_path()
 		echo "$(cd "$(dirname "$1")" && pwd)/$FN"
 	fi
 	echo
+}
+
+# 得到路径相对于 from directory 的路径。
+# $1 from directory
+# $2 path
+function myenv_get_rlt_path()
+{
+	if [ ! -d $1 ]; then
+		echo "1"
+		return
+	fi
+
+	if [ ! -d $2 -a ! -f $2 ]; then
+		echo "2"
+		return
+	fi
+
+	realpath --relative-to $1 $2
+
 }
 
 # 根据path，生成缩略路径

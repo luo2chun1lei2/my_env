@@ -78,7 +78,8 @@ function help()
 	printf "  [options].\n"
 	printf "    -e/--edit edit or add note.\n"
 	printf "    -d/--delete delete note.\n"
-	printf "    -l/--list list all targets.\n"
+	printf "    -l     list all targets.\n"
+	printf "    --list list all targets and contents.\n"
 }
 
 # 分析参数
@@ -91,6 +92,7 @@ fi
 eval set -- "$OPTS"
 
 OPT_DO=r
+OPT_SHOW_CONTENT=n
 while true ; do
 	case "$1" in
 		-h|--help)
@@ -106,8 +108,13 @@ while true ; do
 			OPT_DO=d
 			shift
 			;;
-		-l|--list)
+		-l)
 			OPT_DO=l
+			shift
+			;;
+		--list)
+			OPT_DO=l
+			OPT_SHOW_CONTENT=y
 			shift
 			;;
 		--)
@@ -130,12 +137,20 @@ if [ $OPT_DO == 'l' ]; then
 
 	if [ $# -eq 0 ]; then
 		for one in `find_note`; do
-			get_target $one
+			echo -n "[" $(get_target $one) | tr -d '\r\n' ; echo " ]"
+			if [ ${OPT_SHOW_CONTENT} == 'y' ]; then
+				note_name=$(get_note_name $one)
+				cat ${NOTE_HOME_PATH}/${note_name}
+			fi
 		done
 	else
 		for target in $*; do
 			for one in `find_note $target`; do
-				get_target $one
+				echo -n "[" $(get_target $one) | tr -d '\r\n' ; echo " ]"
+				if [ ${OPT_SHOW_CONTENT} == 'y' ]; then
+					note_name=$(get_note_name $one)
+					cat ${NOTE_HOME_PATH}/${note_name}
+				fi
 			done
 		done
 	fi
@@ -152,7 +167,7 @@ if [ $# -eq 1 ]; then
 	target=$1
 else
 	# 当前 .myenv 的。
-	target="."
+	target=$(myenv_get_rlt_path ${MYENV_CUR_PATH} `pwd`)
 fi
 
 if [ "$OPT_DO" == "r" ]; then
