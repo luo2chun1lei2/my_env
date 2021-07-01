@@ -118,7 +118,6 @@ tool
 architecture ---> upgrade interface --> kind 1 modules
                                     +-> kind 2 modules
 
-
 ## 实现软件的支撑系统
 【这里描述实现上面的系统时，需要提供的支撑系统，比如代码管理、开发平台、调试和测试平台、实施和维护方法，以及人员管理流程等，总之是围绕实现系统的周边系统】
 
@@ -145,10 +144,31 @@ architecture ---> upgrade interface --> kind 1 modules
    2. env 之间可以相互引用，和导入。
 * 实现 TAB 按下后，word complete 操作。 OK
 * 可以通过配置文件等，使用其他环境的脚本。 OK
-
-等待实现：
 * 允许设置 env 中某个文件、文件夹相关的操作，和 context menu 类似。（可用）
 	添加了 context 的命令，但是发现bash在处理复杂的数据结构时，力不从心。
+
+等待实现：
+version 2:
+* 将系统划分为三个功能：环境、状态显示和执行命令。
+	* 环境：可以进入到指定的环境中(myenv)，环境可以是某个目录、虚拟名字、远程环境等。进入环境后，就加载计划好的环境变量和脚本。
+		目前碰到在同一个目录下，具有不同的环境的情况，没有办法解决，只能通过使用者自己来区分。
+		需要登录远程的环境，需要执行的命令是固定的，所以应该可以自动化。
+		虚拟环境，是要进行某些操作，但是并不局限于某个目录。
+	* 提示：用户可以显示出当前的情况，方便用户执行某些命令，以及根据特殊的状态进行操作。
+		需要具有很强的可配置性，允许工具本身和使用者定制。
+		因为如果显示比较多，会减少命令和命令结果的显示，所以这里需要能够比较强的伸缩。
+	* 执行命令：针对目标执行一些操作。
+		* 目标：可以是名字、path等。
+		* 操作：可以是 function或者是 script。
+		* 状态: 跟踪命令的完成情况，或者命令涉及到的数据情况。-> 状态。
+		* Help/Complete: 提供帮助和补全功能。
+* 加入的技术：
+	* sqlite: 基于文件的数据库，方便创建多种结构的配置和处理。
+	* 路径的模式匹配。用什么来实现？
+	* PS1 用 powerline 来实现吗？更加的容易和绚丽。
+
+
+还在规划：
 * 实现 search-do 模式，就是将 “search” 得到的结果，交给 “do” 去处理。
 	最好能够在 bash 下都可以运行，不然只能定制一个 shell 程序了。
 	1. 我们很多的动作都是先search，然后根据 search 的结果操作。
@@ -157,11 +177,6 @@ architecture ---> upgrade interface --> kind 1 modules
 	这样就方便操作了。
 	4. search-do 需要把内部执行的命令的导出都放入临时文件，然后下面一个命令就可以获取。
       	1. content -> do -> content
-
-还在规划：
-* 是否加入一个Frame，可以在上下左右显示不同的信息，
-	比如底部显示正在进行的工作Job，上面显示系统的状态等。
-	参考pymux等。
 * 是否加入一个 IDE 环境，显示 某个目标的 context ?
    1.  目标的列表
    2.  目标的动作列表
@@ -173,3 +188,21 @@ architecture ---> upgrade interface --> kind 1 modules
 	1. 可以公开某个机器的env，其他机器可以登录并使用。
 	2. 脚本可以运行在任意环境中。参考 dsh，注意避免没有必要的繁琐实现。
 * 版本或种类管理需要再考虑一下。主要是目前没有明确的需求。
+* 用 SQLite 替代现在的设定文件(比如context/note)，方便编程和统一管理
+* PS0 的时间，可以放到下一条命令看到“时间差”。
+
+* 路径设置，支持 global pattern 或者 其他的，正则表达式过于复杂了。
+
+* 是否加入一个Frame，可以在上下左右显示不同的信息，
+	比如底部显示正在进行的工作Job，上面显示系统的状态等。
+	参考pymux等。
+* 可以显示状态栏。
+* 可以定制PS1。可以考虑用 powerline 来代替自己的实现。
+	sudo apt install powerline vim-airline
+	vim-airline 是vim 的powerline插件。
+	powerline-daemon -q
+	POWERLINE_BASH_CONTINUATION=1
+	POWERLINE_BASH_SELECT=1
+	. /usr/share/powerline/bindings/bash/powerline.sh 使用powerline，
+	但是和PS1冲突！
+	powerline-config 是配置的。
