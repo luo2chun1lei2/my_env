@@ -4,12 +4,12 @@ MYENV_SUPPORT_CMD="${MYENV_SUPPORT_CMD} mysh"
 
 function myenv_mysh_help()
 {
-    printf '\nmyenv [options] mysh ...\n'
+    printf 'myenv [options] mysh ...\n'
     printf '    execute command by mysh\n'
 	printf '    ... is mysh options.\n'
 	printf '  example:\n'
-	printf '    myenv mysh -- add_context aaa bbb ccc -- -abc'
-	printf '    myenv mysh -- context -l'
+	printf '    myenv mysh -- add_context aaa bbb ccc -- -abc\n'
+	printf '    myenv mysh -- context -l\n'
     printf '  [options]:\n'
     printf '    -e/--env : env name or path.\n'
     printf '      if not set , find nearest env.\n'

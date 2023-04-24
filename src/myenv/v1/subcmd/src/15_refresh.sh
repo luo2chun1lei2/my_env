@@ -4,7 +4,7 @@ MYENV_SUPPORT_CMD="${MYENV_SUPPORT_CMD} refresh"
 
 function myenv_refresh_help()
 {
-    printf '\nmyenv refresh [target]\n'
+    printf 'myenv refresh [target]\n'
     printf '  refresh target\n'
     printf ' [target]:\n'
     printf '        : git pull newest myenv source.\n'

@@ -6,7 +6,7 @@ function myenv_complete_help()
 {
     PRG_NAME=$(basename "$0")
     
-    printf '\n%s complete [cmd]\n' ${PRG_NAME}
+    printf '%s complete [cmd]\n' ${PRG_NAME}
     printf '  show complete information.\n'
 }
 

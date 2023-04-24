@@ -6,7 +6,7 @@ function myenv_help_help()
 {
     PRG_NAME=$(basename "$0")
     
-    printf '\n%s help [cmd]\n' ${PRG_NAME}
+    printf '%s help [cmd]\n' ${PRG_NAME}
     printf '  show help, or show command help\n'
 }
 
@@ -39,10 +39,12 @@ function myenv_help()
 		# 显示所有的命令的帮助信息
 		for cmd in ${MYENV_SUPPORT_CMD}; do
 			myenv_${cmd}_help
+			printf "\n"
 		done
 
 		for f in `find $MYENV_TOOL_CUR_KIND_SUBCMD_EXE_PATH -maxdepth 1 -type f  | sort`; do
 			${f} -h
+			printf "\n"
 		done
 	else
 		# 显示某个命令的帮助信息

@@ -6,7 +6,7 @@ function myenv_init_help()
 {
     PRG_NAME=$(basename "$0")
     
-    printf '\n%s init [env path] [option]\n' ${PRG_NAME}
+    printf '%s init [env path] [option]\n' ${PRG_NAME}
     printf '  initialize a environment on path.\n'
     printf '  If there is env in path, or create all files and folders for new version.\n'
 	printf ' [options]\n'

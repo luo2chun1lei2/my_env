@@ -6,7 +6,7 @@ function myenv_enter_help()
 {
     PRG_NAME=$(basename "$0")
     
-    printf '\n%s enter [env name|path] [option]\n' ${PRG_NAME}
+    printf '%s enter [env name|path] [option]\n' ${PRG_NAME}
     printf '  enter one environment by name of path.\n'
     printf '  If there is NO env in path, will fail.\n'
 	printf ' [options]\n'

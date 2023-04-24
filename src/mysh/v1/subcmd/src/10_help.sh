@@ -4,8 +4,8 @@ MYENV_SH_SUPPORT_CMD="${MYENV_SH_SUPPORT_CMD} help"
 
 function mysh_help_help()
 {
-    printf '\nmysh help [cmd]\n'
-    printf '  show help, or show command help\n'
+    printf 'mysh help [cmd]\n'
+    printf '  show help, or show command help'
 }
 
 # $* 参数分析！

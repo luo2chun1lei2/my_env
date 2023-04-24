@@ -6,7 +6,7 @@ function myenv_info_help()
 {
     PRG_NAME=$(basename "$0")
     
-    printf '\n%s info [target] [option]\n' ${PRG_NAME}
+    printf '%s info [target] [option]\n' ${PRG_NAME}
     printf '    show information about myenv tool.\n'
 	printf '  [target]\n'
 	printf '            show list of name -> path.\n'

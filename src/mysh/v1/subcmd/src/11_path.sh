@@ -7,8 +7,8 @@ MYENV_TMP_PATH=()
 
 function mysh_setd_help()
 {
-    printf '\nmysh setd\n'
-    printf '  set current directory into list\n'
+    printf 'mysh setd\n'
+    printf '  set current directory into list'
 }
 
 # $* 参数分析！

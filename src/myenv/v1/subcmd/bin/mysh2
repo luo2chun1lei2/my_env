@@ -1,4 +1,4 @@
-#!/usr/bin/python2
+#!/usr/bin/python3
 # -*- coding:utf-8 -*-
 
 # 安装第三方的包：
@@ -19,7 +19,7 @@
 # 改变窗口大小后，用stty -a查看终端大小是否发生改变。
 # exit/ctrl+D退出shell后，再输入命令和查看man/vi是否正常。
 
-import os, sys, locale, time, struct
+import os, sys, locale, time, struct, getopt, shutil
 import select, fcntl, posix, signal
 import pyte, pty, termios
 import errno
@@ -123,13 +123,13 @@ class MyShellBase(object):
                                 
                                 # 显示结果
                                 self.print_str(str_rlt)
-                            except BaseException, err:
+                            except BaseException as err:
                                 # 如果子进程销毁，这里简单的用一个异常捕获，应该用信号捕获。
                                 self.print_str("subprocess failed.\n")
-                                print err
+                                print(err)
                                 sys.exit()
                 # 虽然signal设定了信号处理函数，但是select还是会被打断！ 但是还需要等待 CHILD 关闭。
-                except select.error, (_errno, _strerror):
+                except select.error as error:
                     # select一般的异常都是被打断，就是EINTR错误，可以用“if _errno == errno.EINTR:”来判断。
                     #self.print_str("select exception.")
                     pass
@@ -240,7 +240,7 @@ class LineArray(object):
 
     def print_all(self):
         for i in range(len(self.array)):
-            print " %d:%s" % (i, self.array[i])
+            print(" %d:%s" % (i, self.array[i]))
         
 
 # 将输入的命令和结果保存的Shell
@@ -259,7 +259,7 @@ class MyShell(MyShellBase):
 
         #input_output[0].write(str)
         if str == "z":
-            print self.saved.print_all()
+            print( self.saved.print_all() )
 
     def on_output_end(self, str, is_end):
 
@@ -279,9 +279,34 @@ class MyShell(MyShellBase):
         #    self.is_start = True
         self.saved.save(str)
 
+def usage():
+    print("myenv mysh2:")
+    print("  new my shell implementation.")
+    print("  -h/--help : show help information.")
+
 def main(argv):
     locale.setlocale(locale.LC_ALL, locale='en_US.UTF-8')
 
+    # 分析命令参数
+    try:
+        opts, args = getopt.getopt(argv[1:], 'h', ['help'])
+    except getopt.GetoptError as err:
+        print("{0}".format(err))
+        usage()
+        sys.exit(1)
+
+    for o, a in opts:
+        if o in ('-h', '--help'):
+            # 显示帮助信息
+            usage()
+            sys.exit(0)
+    
+        else:
+            print('unknown arguments "%s"', o)
+            usage()
+            sys.exit(1)
+
+    # 进入新的mysh2。
     shell = MyShell(10)
     shell.start('/bin/bash', [' -i'])
 
