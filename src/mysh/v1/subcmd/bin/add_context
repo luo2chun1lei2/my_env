@@ -10,7 +10,7 @@ source ${MYENV_TOOL_SH_CUR_KIND_SUBCMD_EXE_PATH}/common/_context.sh
 
 function help()
 {
-	printf "\nmysh add_context <target> <name> <action>\n"
+	printf "mysh add_context <target> <name> <action>\n"
 	printf "  add a context to target\n"
 	printf "  action=last all arguments\n"
 	printf "  example: mysh add_context ./abc.txt rm rm \${TARGET}\n"

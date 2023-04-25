@@ -6,7 +6,7 @@ source ${MYENV_TOOL_SRC_COMMON_PATH}/13_env.sh
 
 function help()
 {
-	printf "\nmysh import <target> [options]\n"
+	printf "mysh import <target> [options]\n"
 	printf "  import bin and source here.\n"
 	printf "  [options].\n"
 	printf "    -d/--data : import with data.\n"

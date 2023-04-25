@@ -7,7 +7,7 @@ function mysh_complete_help()
     PRG_NAME=$(basename "$0")
     
     printf 'mysh complete [cmd]\n'
-    printf '  show complete information.'
+    printf '  show complete information.\n'
 }
 
 # $* 参数分析！

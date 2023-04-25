@@ -10,7 +10,7 @@ source ${MYENV_TOOL_SH_CUR_KIND_SUBCMD_EXE_PATH}/common/_context.sh
 
 function help()
 {
-	printf "\nmysh context [target] [name] [option]\n"
+	printf "mysh context [target] [name] [option]\n"
 	printf "  do action to context to target\n"
 	printf " [option]\n"
 	printf "  -l/--list : list information of target\n"

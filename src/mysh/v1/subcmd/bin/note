@@ -72,7 +72,7 @@ function delete_note()
 
 function help()
 {
-	printf "\nmysh note [target] [options]\n"
+	printf "mysh note [target] [options]\n"
 	printf "  write or read note to target.\n"
 	printf "  if target is empty, note is about myenv.\n"
 	printf "  [options].\n"

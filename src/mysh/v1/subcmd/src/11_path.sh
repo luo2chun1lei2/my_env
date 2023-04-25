@@ -8,7 +8,7 @@ MYENV_TMP_PATH=()
 function mysh_setd_help()
 {
     printf 'mysh setd\n'
-    printf '  set current directory into list'
+    printf '  set current directory into list\n'
 }
 
 # $* 参数分析！
@@ -41,7 +41,7 @@ function mysh_setd()
 
 function mysh_unsetd_help()
 {
-    printf '\nmysh unsetd [NO]\n'
+    printf 'mysh unsetd [NO]\n'
     printf '  unset path by NO\n'
 }
 
@@ -78,7 +78,7 @@ function mysh_unsetd()
 
 function mysh_listd_help()
 {
-    printf '\nmysh listd\n'
+    printf 'mysh listd\n'
     printf '  list all saved path\n'
 }
 
@@ -119,7 +119,7 @@ function mysh_listd()
 
 function mysh_cdd_help()
 {
-    printf '\nmysh cdd [no]\n'
+    printf 'mysh cdd [no]\n'
     printf '  cd directory by NO, if not set cd env home.\n'
 }
 

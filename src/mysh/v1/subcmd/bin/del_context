@@ -10,7 +10,7 @@ source ${MYENV_TOOL_SH_CUR_KIND_SUBCMD_EXE_PATH}/common/_context.sh
 
 function help()
 {
-	printf "\nmysh del_context <target> [option] \n"
+	printf "mysh del_context <target> [option] \n"
 	printf "  delete a context to target\n"
 	printf " [option]\n"
 	printf "  -n/--name: name, if not set name, delete all action of target\n"

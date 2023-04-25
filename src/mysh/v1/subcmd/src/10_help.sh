@@ -5,7 +5,7 @@ MYENV_SH_SUPPORT_CMD="${MYENV_SH_SUPPORT_CMD} help"
 function mysh_help_help()
 {
     printf 'mysh help [cmd]\n'
-    printf '  show help, or show command help'
+    printf '  show help, or show command help\n'
 }
 
 # $* 参数分析！
@@ -30,6 +30,7 @@ function mysh_help()
 				shift ; break ;;
 			*)
 				${prefix}_help_help
+				printf "\n"
 				shift ; return 1 ;;
 		esac
 	done
@@ -38,10 +39,12 @@ function mysh_help()
 		# 显示所有的帮助
 		for cmd in ${MYENV_SH_SUPPORT_CMD}; do
 			${prefix}_${cmd}_help
+			printf "\n"
 		done
 
 		for f in `find $MYENV_TOOL_SH_CUR_KIND_SUBCMD_EXE_PATH -maxdepth 1 -type f  | sort`; do
 			${f} -h
+			printf "\n"
 		done
 	else
 		# 显示指定命令的帮助
