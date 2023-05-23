@@ -1,15 +1,22 @@
 # below are the customized settings.
 
+function mysh_env_name()
+{
+    info=""
+
+    if [ -n "${MYENV_CUR_NAME}" ]; then
+        info="${info}ENV:${MYENV_CUR_NAME} "
+    else
+        info="${info}ENV:$(myenv_get_abbr_path ${MYENV_CUR_PATH}) "
+    fi
+
+    echo "$info"
+}
+
 function mysh_prompt()
 {
     info=""
-    
-    if [ -n "${MYENV_CUR_NAME}" ]; then
-		info="${info}ENV:${MYENV_CUR_NAME} "
-	else
-		info="${info}ENV:$(myenv_get_abbr_path ${MYENV_CUR_PATH}) "
-	fi
-
+   
     info="${info}SH:${SHLVL} "
 
     # find ss-local
@@ -48,8 +55,9 @@ function mysh_prompt()
 #PS1='\342\224\214 \[\e[1;37;42m\][#\#@\!| \t| JOB:\j| \w]\[\e[0m\]\n\342\224\224 `if [ $? -eq 0 ]; then echo -n O; else echo -n X; fi;` $(mysh_prompt)\n\$ '
 # 这里必须用单引号，否则"$?"就无法推迟到显示时才执行。
 MYENV_CMD_RLT='`if [ $? -eq 0 ]; then echo -n "\[\e[1;37;42m\]O\[\e[0m\]"; else echo -n "\[\e[1;37;41m\]X\[\e[0m\]"; fi;`'
+MYENV_ENV_NAME='$(mysh_env_name)'
 MYENV_PROMPT='$(mysh_prompt)'
-PS1="\342\224\214 $MYENV_CMD_RLT \[\e[1;37;42m\][#\#@\! \t JOB:\j \u@\h:\w]\[\e[0m\]\n\342\224\224   \[\e[1;37;43m\]$MYENV_PROMPT\[\e[0m\]\n\$ "
+PS1="\342\224\214 $MYENV_CMD_RLT \[\e[1;37;42m\][#\#@\! \t JOB:\j \u@\h:\w]\[\e[0m\]\n\342\224\224   \[\e[1;37;41m\]$MYENV_ENV_NAME\[\e[0m\]\[\e[1;37;43m\]$MYENV_PROMPT\[\e[0m\]\n\$ "
 
 # 命令输入后，执行前的输出。可以作为命令执行时间的标志。
 # TODO: 加入颜色后前后不知道为什么有特殊字符显示。只要不加入颜色就可以。

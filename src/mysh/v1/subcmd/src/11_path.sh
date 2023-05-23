@@ -120,7 +120,8 @@ function mysh_listd()
 function mysh_cdd_help()
 {
     printf 'mysh cdd [no]\n'
-    printf '  cd directory by NO, if not set cd env home.\n'
+    printf '  cd directory by NO.\n'
+    printf '    if not set, cd env home.\n'
 }
 
 # $* 参数分析！
